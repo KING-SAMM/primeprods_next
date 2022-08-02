@@ -41,12 +41,8 @@ const Login = () => {
     return (
         <GuestLayout>
             <AuthCard
-                logo={
-                    <Link href="/">
-                        <a>
-                            <ApplicationLogo className="w-20 h-20 fill-current text-gray-500" />
-                        </a>
-                    </Link>
+                header={
+                    <></>
                 }>
 
                 {/* Session Status */}
@@ -56,6 +52,16 @@ const Login = () => {
                 <AuthValidationErrors className="mb-4" errors={errors} />
 
                 <form onSubmit={submitForm}>
+                    {/* Title  */}
+                    <div class="text-center">
+                        <h2 class="text-2xl font-bold mb-1">
+                            Login
+                        </h2>
+                        <p class="mb-4">
+                            
+                        </p>
+                    </div>
+
                     {/* Email Address */}
                     <div>
                         <Label htmlFor="email">Email</Label>
@@ -106,7 +112,7 @@ const Login = () => {
 
                     <div className="flex items-center justify-end mt-4">
                         <Link href="/forgot-password">
-                            <a className="underline text-sm text-gray-600 hover:text-gray-900">
+                            <a className="underline text-sm text-[#4E5E7D] hover:text-[#1E2E4D]">
                                 Forgot your password?
                             </a>
                         </Link>

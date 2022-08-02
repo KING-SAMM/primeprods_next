@@ -30,17 +30,23 @@ const Register = () => {
     return (
         <GuestLayout>
             <AuthCard
-                logo={
-                    <Link href="/">
-                        <a>
-                            <ApplicationLogo className="w-20 h-20 fill-current text-gray-500" />
-                        </a>
-                    </Link>
+                header={
+                    <></>
                 }>
                 {/* Validation Errors */}
                 <AuthValidationErrors className="mb-4" errors={errors} />
 
                 <form onSubmit={submitForm}>
+                    {/* Title  */}
+                    <div class="text-center">
+                        <h2 class="text-2xl font-bold mb-1">
+                            Register
+                        </h2>
+                        <p class="mb-4">
+                            create an account to add prototypes
+                        </p>
+                    </div>
+
                     {/* Name */}
                     <div>
                         <Label htmlFor="name">Name</Label>
@@ -105,7 +111,7 @@ const Register = () => {
 
                     <div className="flex items-center justify-end mt-4">
                         <Link href="/login">
-                            <a className="underline text-sm text-gray-600 hover:text-gray-900">
+                            <a className="underline text-sm text-[#4E5E7D] hover:text-[#1E2E4D]">
                                 Already registered?
                             </a>
                         </Link>
