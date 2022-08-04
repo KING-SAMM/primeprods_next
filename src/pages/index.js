@@ -5,6 +5,7 @@ import PrototypeCard from '@/components/PrototypeCard'
 
 export default function Home() {
     const { user } = useAuth({ middleware: 'guest' })
+    
 
     return (
         <>
