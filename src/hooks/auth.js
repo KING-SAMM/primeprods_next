@@ -106,7 +106,6 @@ export const useAuth = ({ middleware, redirectIfAuthenticated } = {}) => {
 
     return {
         user,
-        // prototypes,
         register,
         login,
         forgotPassword,

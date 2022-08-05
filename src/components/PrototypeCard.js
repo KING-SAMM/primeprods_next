@@ -2,13 +2,22 @@ import React, { useState, useEffect } from 'react'
 import axios from '@/lib/axios'
 import Card from '@/components/Card'
 import { useAuth } from '@/hooks/auth'
+import Link from 'next/link'
+import Image  from 'next/image'
+// import { useRouter } from 'next/router'
 
 export default function PrototypeCard() {
-    // const { prototypes } = useAuth({ middleware: 'guest' })
-    // const result = prototypes()
-    // console.log('Prototypes: ', prototypes.data) 
+    // const router = useRouter()
 
+    // Image variable - uninitialized
+    let url
+
+    // Image variable 
+    const imgUrl = "https://www.notebookcheck.net/fileadmin/_processed_/f/3/csm_csm_Oppo_Watch_3_Render_2_7ef6882bff_4393f5078f.jpg"
+
+    // Initial prototypes state 
     const [prototypes, setPrototypes] = useState([])
+
     useEffect(async () => {
         setPrototypes(await axios.get('http://localhost:8000/api/prototypes')
              .then(res => res.data.prototypes.data)
@@ -21,30 +30,27 @@ export default function PrototypeCard() {
 
   return (
 
-    <div class="u-effect-fade u-effect-hover-zoom u-gallery-item">
+    <div class="u-effect-fade u-effect-hover-zoom relative hidden">
       {  
         prototypes.map((prototype, idx) => (
           <Card class="rounded-r-lg lg:h-[160px]" key={ idx }>
               <div class="overflow-hidden">         
-                  <img 
-                    src={'/storage' + prototype.image }
-                    className="object-cover lg:object-cover lg:h-[160px]"
+                  <img
+                    src={imgUrl}
+                    className="w-full h-full object-cover bg-cover transition-transform duration-500 ease-in-out scale-100 bg-no-repeat bg-center lg:object-cover lg:h-[160px]"
                   />
-                  {/* <img  
-                      src="{{ $prototype->image 
-                      ? asset('storage/' . $prototype->image)
-                      : asset('/images/placeholder.png') }}"
-                      class="proto-card-image object-cover lg:object-cover lg:h-[160px] u-back-slide"
-                      /> */}
               </div>
 
               <div class="proto-card-text">
-                  <a href="/prototypes/{ prototype.id } ">
+                { url = "/prototypes/" + prototype.id }
+                <Link href={ url }>
+                  <a>
                     <h4 className='text-white mt-2'>
                       { prototype.title }
                     </h4>
                     <p className=''>{ prototype.company }</p>
                   </a>
+                </Link>
                   
                   {/* <a href="/prototypes/{{ $prototype->id }}">
                       <h4 class="u-gallery-heading mt-2">{{ $prototype->title }}</h4>
