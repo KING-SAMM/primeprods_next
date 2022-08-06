@@ -16,23 +16,30 @@ export default function PrototypeCard() {
     const imgUrl = "https://www.notebookcheck.net/fileadmin/_processed_/f/3/csm_csm_Oppo_Watch_3_Render_2_7ef6882bff_4393f5078f.jpg"
 
     // Initial prototypes state 
-    const [prototypes, setPrototypes] = useState([])
+    // const [prototypes, setPrototypes] = useState([])
+    const [res, setRes] = useState([])
 
-    useEffect(async () => {
-        setPrototypes(await axios.get('http://localhost:8000/api/prototypes')
-             .then(res => res.data.prototypes.data)
-             .catch(error => console.error(error))
-            )
-             console.log(prototypes)
-            return prototypes
-    }, [])
+      useEffect(
+        async (res) => {
+          res = await fetch('http://localhost:8000/api/prototypes')
+          res = await res.json()
+          // res = res.prototypes.data
+          res = Object.values(res.prototypes.data).flat()
+ nbnm           
+          setRes([...res])
+    
+          console.log('RESPONSE is ', res)
 
+          return res
+        }, [res])
+    
+        console.log('RESPONSE is ', res)
 
   return (
 
-    <div class="u-effect-fade u-effect-hover-zoom relative hidden">
+    <div class="u-effect-fade u-effect-hover-zoom relative">
       {  
-        prototypes.map((prototype, idx) => (
+        res.map((prototype, idx) => (
           <Card class="rounded-r-lg lg:h-[160px]" key={ idx }>
               <div class="overflow-hidden">         
                   <img
