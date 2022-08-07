@@ -25,7 +25,7 @@ export default function PrototypeCard() {
           res = await res.json()
           // res = res.prototypes.data
           res = Object.values(res.prototypes.data).flat()
- nbnm           
+          
           setRes([...res])
     
           console.log('RESPONSE is ', res)
