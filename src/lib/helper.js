@@ -1,14 +1,14 @@
-export function getAllPrototypes(id)
+export async function getAllPrototypes(id)
 {
-    const prototypesData = [
-        { id: 1, title: "First Title", description: "Body of Prototype One" },
-        { id: 2, title: "Second Title", description: "Body of Prototype Two" },
-        { id: 3, title: "Third Title", description: "Body of Prototype Three" }
-    ]
-
-    if (id) {
-        return prototypesData.filter(prototype => prototype.id == id)
-    }
-
-    return prototypesData;
+    return await fetch('http://localhost:8000/api/prototypes')
+        .then( response => response.json())
+        .then(response => {
+            response = response.prototypes.data
+            console.log('RESPONSE is ', response);
+            if (id) {
+                return response.filter(prototype => prototype.id == id)
+            }
+            return response;
+        })
+        .catch(err => console.error("ERROR is ",err));
 }

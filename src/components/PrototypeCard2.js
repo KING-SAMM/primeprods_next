@@ -6,40 +6,20 @@ import Link from 'next/link'
 import Image  from 'next/image'
 // import { useRouter } from 'next/router'
 
-export default function PrototypeCard() {
-    // const router = useRouter()
-
+export default function PrototypeCard2({ prototypes }) {
     // Image variable - uninitialized
     let url
 
     // Image variable 
     const imgUrl = "https://www.notebookcheck.net/fileadmin/_processed_/f/3/csm_csm_Oppo_Watch_3_Render_2_7ef6882bff_4393f5078f.jpg"
 
-    // Initial prototypes state 
-    // const [prototypes, setPrototypes] = useState([])
-    const [prototypesResult, setPrototypesResult] = useState([])
-
-      useEffect(
-        async (prototypesResult) => {
-          prototypesResult = await fetch('http://localhost:8000/api/prototypes')
-          prototypesResult = await prototypesResult.json()
-          // prototypesResult = prototypesResult.prototypes.data
-          prototypesResult = Object.values(prototypesResult.prototypes.data).flat()
-          
-          setPrototypesResult([...prototypesResult])
     
-          console.log('RESPONSE is ', prototypesResult)
-
-          return prototypesResult
-        }, [prototypesResult])
-    
-        console.log('RESPONSE is ', prototypesResult)
 
   return (
 
     <div class="u-effect-fade u-effect-hover-zoom relative">
       {  
-        prototypesResult.map((prototype, idx) => (
+        prototypes.map((prototype, idx) => (
           <Card class="rounded-r-lg lg:h-[160px]" key={ idx }>
               <div class="overflow-hidden">         
                   <img
@@ -71,8 +51,19 @@ export default function PrototypeCard() {
         )) 
       }
     </div>
-    
   )
+}
+
+export async function getStaticProps() {
+    const res = await axios.get('http://localhost:8000/api/prototypes')
+    const prototypes = res.json()
+    console.log(prototypes)
+
+    return {
+        props: {
+            prototypes
+        }
+    }
 }
 
 
