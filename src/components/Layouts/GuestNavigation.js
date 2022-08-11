@@ -1,6 +1,7 @@
 import ApplicationLogo from '@/components/ApplicationLogo'
 import Dropdown from '@/components/Dropdown'
 import Link from 'next/link'
+import Image from 'next/image'
 import NavLink from '@/components/NavLink'
 import ResponsiveNavLink, { ResponsiveNavButton } from '@/components/ResponsiveNavLink'
 import { DropdownButton } from '@/components/DropdownLink'
@@ -24,8 +25,12 @@ const GuestNavigation = ({ user }) => {
                         {/* Logo */}
                         <div className="flex-shrink-0 flex items-center">
                             <Link href="/">
-                                <a>
-                                    <ApplicationLogo className="block h-10 w-auto fill-current text-gray-600" />
+                                <a> 
+                                    {/* <ApplicationLogo className="block h-10 w-auto fill-current text-gray-600" /> */}
+                                    <img
+                                        src='/images/logo4.PNG'
+                                        className='block h-16 w-auto'
+                                     />
                                 </a>
                             </Link>
                         </div>
