@@ -14,6 +14,8 @@ const GuestNavigation = ({ user }) => {
 
     const { logout } = useAuth()
 
+    // const { user } = useAuth({ middleware: 'guest' }) // Added
+
     const [open, setOpen] = useState(false)
 
     return (
@@ -29,7 +31,7 @@ const GuestNavigation = ({ user }) => {
                                     {/* <ApplicationLogo className="block h-10 w-auto fill-current text-gray-600" /> */}
                                     <img
                                         src='/images/logo4.PNG'
-                                        className='block h-16 w-auto'
+                                        className='block h-12 w-auto fill-current'
                                      />
                                 </a>
                             </Link>

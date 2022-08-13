@@ -1,14 +1,22 @@
 import useSWR from 'swr'
 import axios from '@/lib/axios'
+import { getAllUsers } from '@/lib/fetch'
 import { useEffect } from 'react'
 import { useRouter } from 'next/router'
+
+
 
 export const useAuth = ({ middleware, redirectIfAuthenticated } = {}) => {
     const router = useRouter()
 
-    const { data: user, error, mutate } = useSWR('/user', () =>
+    // const users = getAllUsers()
+    // users.map(user => {
+
+    // })
+
+    const { data: user, error, mutate } = useSWR('/api/users', () =>
         axios
-            .get('/user')
+            .get('/api/users')
             .then(res => res.data)
             .catch(error => {
                 if (error.response.status !== 409) throw error
@@ -17,7 +25,7 @@ export const useAuth = ({ middleware, redirectIfAuthenticated } = {}) => {
             }),
     )
 
-    const csrf = () => axios.get('/sanctum/csrf-cookie')
+    const csrf = () => axios.get('/api/sanctum/csrf-cookie')
 
     const register = async ({ setErrors, ...props }) => {
         await csrf()
@@ -25,7 +33,7 @@ export const useAuth = ({ middleware, redirectIfAuthenticated } = {}) => {
         setErrors([])
 
         axios
-            .post('/register', props)
+            .post('/api/register', props)
             .then(() => mutate())
             .catch(error => {
 
@@ -42,7 +50,7 @@ export const useAuth = ({ middleware, redirectIfAuthenticated } = {}) => {
         setStatus(null)
 
         axios
-            .post('/login', props)
+            .post('/api/login', props)
             .then(() => mutate())
             .catch(error => {
                 if (error.response.status !== 422) throw error
@@ -58,7 +66,7 @@ export const useAuth = ({ middleware, redirectIfAuthenticated } = {}) => {
         setStatus(null)
 
         axios
-            .post('/forgot-password', { email })
+            .post('/api/forgot-password', { email })
             .then(response => setStatus(response.data.status))
             .catch(error => {
                 if (error.response.status !== 422) throw error
@@ -74,7 +82,7 @@ export const useAuth = ({ middleware, redirectIfAuthenticated } = {}) => {
         setStatus(null)
 
         axios
-            .post('/reset-password', { token: router.query.token, ...props })
+            .post('/api/reset-password', { token: router.query.token, ...props })
             .then(response => router.push('/login?reset=' + btoa(response.data.status)))
             .catch(error => {
                 if (error.response.status !== 422) throw error
@@ -85,14 +93,14 @@ export const useAuth = ({ middleware, redirectIfAuthenticated } = {}) => {
 
     const resendEmailVerification = ({ setStatus }) => {
         axios
-            .post('/email/verification-notification')
+            .post('/api/email/verification-notification')
             .then(response => setStatus(response.data.status))
     }
 
     const logout = async () => {
         if (! error) {
             await axios
-                .post('/logout')
+                .post('/api/logout')
                 .then(() => mutate())
         }
 

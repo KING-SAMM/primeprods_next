@@ -1,12 +1,11 @@
-import React, { useState, useEffect } from 'react'
-import axios from '@/lib/axios'
+import React from 'react'
 import Card from '@/components/Card'
 import { useAuth } from '@/hooks/auth'
 import Link from 'next/link'
 import Image  from 'next/image'
 // import { useRouter } from 'next/router'
 
-export default function PrototypeCard() {
+export default function PrototypeCard({ prototypes }) {
     // const router = useRouter()
 
     // Image variable - uninitialized
@@ -14,33 +13,13 @@ export default function PrototypeCard() {
 
     // Image variable 
     const imgUrl = "https://www.notebookcheck.net/fileadmin/_processed_/f/3/csm_csm_Oppo_Watch_3_Render_2_7ef6882bff_4393f5078f.jpg"
-
-    // Initial prototypes state 
-    // const [prototypes, setPrototypes] = useState([])
-    const [prototypesResult, setPrototypesResult] = useState([])
-
-      useEffect(
-        async (prototypesResult) => {
-          prototypesResult = await fetch('http://localhost:8000/api/prototypes')
-          prototypesResult = await prototypesResult.json()
-          // prototypesResult = prototypesResult.prototypes.data
-          prototypesResult = Object.values(prototypesResult.prototypes.data).flat()
-          
-          setPrototypesResult([...prototypesResult])
-    
-          console.log('RESPONSE is ', prototypesResult)
-
-          return prototypesResult
-        }, [prototypesResult])
-    
-        console.log('RESPONSE is ', prototypesResult)
-
+  
   return (
 
     <div class="u-effect-fade u-effect-hover-zoom relative">
-      {  
-        prototypesResult.map((prototype, idx) => (
-          <Card class="rounded-r-lg lg:h-[160px]" key={ idx }>
+      {  prototypes.map(prototype => {
+          return (
+          <Card class="rounded-r-lg lg:h-[160px]" key={ prototype.id }>
               <div class="overflow-hidden">         
                   <img
                     src={imgUrl}
@@ -55,23 +34,14 @@ export default function PrototypeCard() {
                     <h4 className='text-white mt-2'>
                       { prototype.title }
                     </h4>
-                    <p className=''>{ prototype.company }</p>
+                    <p className='text-blue-400'>{ prototype.company }</p>
                   </a>
-                </Link>
-                  
-                  {/* <a href="/prototypes/{{ $prototype->id }}">
-                      <h4 class="u-gallery-heading mt-2">{{ $prototype->title }}</h4>
-                      <p class="u-gallery-text">{{ $prototype->company }}</p>
-                  </a> */}
-                  {/* <x-prototype-tags :tagsCsv="$prototype->tags" class="bg-[#142443]" />
-                  <p class="u-gallery-text">{{ $prototype->location }}</p> */}
-                  
+                </Link>    
               </div>
           </Card>
-        )) 
+        )})
       }
     </div>
-    
   )
 }
 

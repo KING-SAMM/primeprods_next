@@ -1,4 +1,4 @@
-import { getAllPrototypes } from "@/lib/helper";
+import { getAllPrototypes } from "@/lib/fetch";
 import GuestLayout from "@/components/Layouts/GuestLayout";
 import GuestNavigation from "@/components/Layouts/GuestNavigation";
 import logo from "../../../public/images/logo.PNG";
@@ -14,7 +14,7 @@ export default function Prototype({ prototypes }) {
 
     return (
         <GuestLayout>
-        {  
+        {  prototypes ?
             prototypes.map(prototype => (
             <>
                 <Head>
@@ -61,8 +61,19 @@ export default function Prototype({ prototypes }) {
                         </div>
                     </div>          
                 </div>
-                </>
+            </>
             )) 
+            : <>
+                <Head>
+                    <title>{ prototype.title }</title>
+                </Head>
+                <GuestNavigation />
+                <div className="relative px-4 md:px-4 lg:px-8">
+                    <h1 className="text-center">
+                        Loading...
+                    </h1>
+                </div>
+            </>
         }
         </GuestLayout>
     )

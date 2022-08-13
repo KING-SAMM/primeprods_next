@@ -23,9 +23,13 @@ const Navigation = ({ user }) => {
                     <div className="flex">
                         {/* Logo */}
                         <div className="flex-shrink-0 flex items-center">
-                            <Link href="/dashboard">
+                            <Link href="/">
                                 <a>
-                                    <ApplicationLogo className="block h-10 w-auto fill-current text-gray-600" />
+                                    {/* <ApplicationLogo className="block h-10 w-auto fill-current text-gray-600" /> */}
+                                    <img
+                                        src='/images/logo4.PNG'
+                                        className='block h-12 w-auto fill-current'
+                                     />
                                 </a>
                             </Link>
                         </div>
@@ -36,6 +40,11 @@ const Navigation = ({ user }) => {
                                 href="/dashboard"
                                 active={router.pathname === '/dashboard'}>
                                 Dashboard
+                            </NavLink>
+                            <NavLink 
+                                href="/"
+                                active={router.pathname === '/'}>
+                                Prototypes
                             </NavLink>
                         </div>
                     </div>
