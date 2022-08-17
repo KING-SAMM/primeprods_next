@@ -12,6 +12,7 @@ const Navigation = ({ user }) => {
     const router = useRouter()
 
     const { logout } = useAuth()
+    // const { logout, user } = useAuth({ middleware: 'auth' })
 
     const [open, setOpen] = useState(false)
 
@@ -36,15 +37,15 @@ const Navigation = ({ user }) => {
 
                         {/* Navigation Links */}
                         <div className="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
-                            <NavLink
-                                href="/dashboard"
-                                active={router.pathname === '/dashboard'}>
-                                Dashboard
-                            </NavLink>
                             <NavLink 
                                 href="/"
                                 active={router.pathname === '/'}>
                                 Prototypes
+                            </NavLink>
+                            <NavLink
+                                href="/dashboard"
+                                active={router.pathname === '/dashboard'}>
+                                Dashboard
                             </NavLink>
                         </div>
                     </div>
@@ -117,6 +118,11 @@ const Navigation = ({ user }) => {
             {open && (
                 <div className="block sm:hidden">
                     <div className="pt-2 pb-3 space-y-1">
+                        <ResponsiveNavLink
+                            href="/"
+                            active={router.pathname === '/'}>
+                            Prototypes
+                        </ResponsiveNavLink>
                         <ResponsiveNavLink
                             href="/dashboard"
                             active={router.pathname === '/dashboard'}>

@@ -9,14 +9,9 @@ import { useRouter } from 'next/router'
 export const useAuth = ({ middleware, redirectIfAuthenticated } = {}) => {
     const router = useRouter()
 
-    // const users = getAllUsers()
-    // users.map(user => {
-
-    // })
-
-    const { data: user, error, mutate } = useSWR('/api/users', () =>
+    const { data: user, error, mutate } = useSWR('/api/user', () =>
         axios
-            .get('/api/users')
+            .get('/api/user')
             .then(res => res.data)
             .catch(error => {
                 if (error.response.status !== 409) throw error
@@ -25,7 +20,7 @@ export const useAuth = ({ middleware, redirectIfAuthenticated } = {}) => {
             }),
     )
 
-    const csrf = () => axios.get('/api/sanctum/csrf-cookie')
+    const csrf = () => axios.get('/sanctum/csrf-cookie')
 
     const register = async ({ setErrors, ...props }) => {
         await csrf()
@@ -33,7 +28,7 @@ export const useAuth = ({ middleware, redirectIfAuthenticated } = {}) => {
         setErrors([])
 
         axios
-            .post('/api/register', props)
+            .post('/register', props)
             .then(() => mutate())
             .catch(error => {
 
@@ -50,7 +45,7 @@ export const useAuth = ({ middleware, redirectIfAuthenticated } = {}) => {
         setStatus(null)
 
         axios
-            .post('/api/login', props)
+            .post('/login', props)
             .then(() => mutate())
             .catch(error => {
                 if (error.response.status !== 422) throw error
@@ -66,7 +61,7 @@ export const useAuth = ({ middleware, redirectIfAuthenticated } = {}) => {
         setStatus(null)
 
         axios
-            .post('/api/forgot-password', { email })
+            .post('/forgot-password', { email })
             .then(response => setStatus(response.data.status))
             .catch(error => {
                 if (error.response.status !== 422) throw error
@@ -82,7 +77,7 @@ export const useAuth = ({ middleware, redirectIfAuthenticated } = {}) => {
         setStatus(null)
 
         axios
-            .post('/api/reset-password', { token: router.query.token, ...props })
+            .post('/reset-password', { token: router.query.token, ...props })
             .then(response => router.push('/login?reset=' + btoa(response.data.status)))
             .catch(error => {
                 if (error.response.status !== 422) throw error
@@ -93,14 +88,14 @@ export const useAuth = ({ middleware, redirectIfAuthenticated } = {}) => {
 
     const resendEmailVerification = ({ setStatus }) => {
         axios
-            .post('/api/email/verification-notification')
+            .post('/email/verification-notification')
             .then(response => setStatus(response.data.status))
     }
 
     const logout = async () => {
         if (! error) {
             await axios
-                .post('/api/logout')
+                .post('/logout')
                 .then(() => mutate())
         }
 
@@ -114,6 +109,7 @@ export const useAuth = ({ middleware, redirectIfAuthenticated } = {}) => {
 
     return {
         user,
+        csrf, // Added
         register,
         login,
         forgotPassword,

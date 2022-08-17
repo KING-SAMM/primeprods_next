@@ -6,7 +6,7 @@ import { useAuth } from '@/hooks/auth'
 import PrototypeCard from '@/components/PrototypeCard'
 
 export default function Home({ prototypes }) {
-    const { user } = useAuth({ middleware: 'guest' })
+    const { user } = useAuth()
 
     let url
 

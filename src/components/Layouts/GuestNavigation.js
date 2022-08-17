@@ -106,6 +106,11 @@ const GuestNavigation = ({ user }) => {
                 <div className="block sm:hidden">
                     <div className="pt-2 pb-3 space-y-1">
                         <ResponsiveNavLink
+                            href="/"
+                            active={router.pathname === '/'}>
+                            Prototypes
+                        </ResponsiveNavLink>
+                        <ResponsiveNavLink
                             href="/dashboard"
                             active={router.pathname === '/dashboard'}>
                             Dashboard
@@ -143,8 +148,11 @@ const GuestNavigation = ({ user }) => {
 
                         <div className="mt-3 space-y-1">
                             {/* Authentication */}
-                            <ResponsiveNavButton onClick={logout}>
-                                Logout
+                            <ResponsiveNavButton>
+                                Login
+                            </ResponsiveNavButton>
+                            <ResponsiveNavButton>
+                                Register
                             </ResponsiveNavButton>
                         </div>
                     </div>
