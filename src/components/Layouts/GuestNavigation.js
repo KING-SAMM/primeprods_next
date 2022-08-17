@@ -1,5 +1,6 @@
 import ApplicationLogo from '@/components/ApplicationLogo'
 import Dropdown from '@/components/Dropdown'
+import DropdownLink, { DropdownMultiItems } from '@/components/DropdownLink'
 import Link from 'next/link'
 import Image from 'next/image'
 import NavLink from '@/components/NavLink'
@@ -66,6 +67,46 @@ const GuestNavigation = ({ user }) => {
                                 </>
                             }
                         </div>
+                    </div>
+
+                    {/* Settings Dropdown */}
+                    <div className="hidden sm:flex sm:items-center sm:ml-6">
+                        <Dropdown
+                            align="right"
+                            width="48"
+                            trigger={
+                                <button className="flex items-center text-sm font-medium text-gray-500 hover:text-gray-700 focus:outline-none transition duration-150 ease-in-out">
+                                    <div>{user?.name}</div>
+
+                                    <div className="ml-1">
+                                        <svg
+                                            className="fill-current h-4 w-4"
+                                            xmlns="http://www.w3.org/2000/svg"
+                                            viewBox="0 0 20 20">
+                                            <path
+                                                fillRule="evenodd"
+                                                d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z"
+                                                clipRule="evenodd"
+                                            />
+                                        </svg>
+                                    </div>
+                                </button>
+                            }>
+
+                            {/* Authentication */}
+                            {user
+                            ?
+                            <DropdownButton onClick={logout}>
+                                Logout
+                            </DropdownButton>
+                            :
+                            <DropdownButton>
+                                <Link href='/login'>
+                                    Login
+                                </Link>
+                            </DropdownButton>
+                            }
+                        </Dropdown>
                     </div>
 
                     {/* Hamburger */}
@@ -148,12 +189,24 @@ const GuestNavigation = ({ user }) => {
 
                         <div className="mt-3 space-y-1">
                             {/* Authentication */}
-                            <ResponsiveNavButton>
-                                Login
-                            </ResponsiveNavButton>
-                            <ResponsiveNavButton>
-                                Register
-                            </ResponsiveNavButton>
+                            {user ? 
+                                <ResponsiveNavButton onClick={logout}>
+                                    Logout
+                                </ResponsiveNavButton>
+                            : 
+                            <>
+                                <ResponsiveNavButton
+                                    href="/login"
+                                >
+                                    Login
+                                </ResponsiveNavButton>
+                                <ResponsiveNavButton
+                                    href="/register"
+                                >
+                                    Register
+                                </ResponsiveNavButton>
+                            </>
+                            }
                         </div>
                     </div>
                 </div>

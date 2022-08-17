@@ -7,7 +7,7 @@ import PrototypeCard from '@/components/PrototypeCard'
 
 export default function Home({ prototypes }) {
     const { user } = useAuth()
-
+    
     let url
 
     // Image variable 
