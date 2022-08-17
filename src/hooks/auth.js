@@ -1,10 +1,7 @@
 import useSWR from 'swr'
 import axios from '@/lib/axios'
-import { getAllUsers } from '@/lib/fetch'
 import { useEffect } from 'react'
 import { useRouter } from 'next/router'
-
-
 
 export const useAuth = ({ middleware, redirectIfAuthenticated } = {}) => {
     const router = useRouter()
@@ -31,7 +28,6 @@ export const useAuth = ({ middleware, redirectIfAuthenticated } = {}) => {
             .post('/register', props)
             .then(() => mutate())
             .catch(error => {
-
                 if (error.response.status !== 422) throw error
 
                 setErrors(Object.values(error.response.data.errors).flat())
@@ -100,16 +96,16 @@ export const useAuth = ({ middleware, redirectIfAuthenticated } = {}) => {
         }
 
         window.location.pathname = '/login'
-    }    
+    }
 
     useEffect(() => {
         if (middleware === 'guest' && redirectIfAuthenticated && user) router.push(redirectIfAuthenticated)
+        if (window.location.pathname === "/verify-email" && user?.email_verified_at) router.push(redirectIfAuthenticated)
         if (middleware === 'auth' && error) logout()
     }, [user, error])
 
     return {
         user,
-        csrf, // Added
         register,
         login,
         forgotPassword,
