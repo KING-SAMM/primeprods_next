@@ -43,8 +43,8 @@ const Navigation = ({ user }) => {
                                 Prototypes
                             </NavLink>
                             <NavLink
-                                href="/dashboard"
-                                active={router.pathname === '/dashboard'}>
+                                href="/admin/dashboard"
+                                active={router.pathname === '/admin/dashboard'}>
                                 Dashboard
                             </NavLink>
                         </div>
@@ -124,8 +124,8 @@ const Navigation = ({ user }) => {
                             Prototypes
                         </ResponsiveNavLink>
                         <ResponsiveNavLink
-                            href="/dashboard"
-                            active={router.pathname === '/dashboard'}>
+                            href="/admin/dashboard"
+                            active={router.pathname === '/admin/dashboard'}>
                             Dashboard
                         </ResponsiveNavLink>
                     </div>

@@ -28,7 +28,7 @@ export default function Home({ prototypes }) {
                     </Link>
 
                     {user ?
-                        <Link href="/dashboard">
+                        <Link href="/admin/dashboard">
                             <a className="ml-4 text-sm text-gray-700 underline">
                                 Dashboard
                             </a>

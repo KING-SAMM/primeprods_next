@@ -47,8 +47,8 @@ const GuestNavigation = ({ user }) => {
                             </NavLink>
                             {user ?
                                 <NavLink 
-                                    href="/dashboard"
-                                    active={router.pathname === '/dashboard'}>
+                                    href="/admin/dashboard"
+                                    active={router.pathname === '/admin/dashboard'}>
                                         Dashboard
                                 </NavLink>
                                 :
@@ -152,8 +152,8 @@ const GuestNavigation = ({ user }) => {
                             Prototypes
                         </ResponsiveNavLink>
                         <ResponsiveNavLink
-                            href="/dashboard"
-                            active={router.pathname === '/dashboard'}>
+                            href="/admin/dashboard"
+                            active={router.pathname === '/admin/dashboard'}>
                             Dashboard
                         </ResponsiveNavLink>
                     </div>
