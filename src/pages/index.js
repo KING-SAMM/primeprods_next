@@ -4,6 +4,7 @@ import Card from '@/components/Card'
 import { getAllPrototypes } from "@/lib/fetch";
 import { useAuth } from '@/hooks/auth'
 import PrototypeCard from '@/components/PrototypeCard'
+import GuestNavigation from '@/components/Layouts/GuestNavigation';
 
 export default function Home({ prototypes }) {
     const { user } = useAuth()
@@ -18,37 +19,50 @@ export default function Home({ prototypes }) {
             <Head>
                 <title>Prime Protoypes</title>
             </Head>
-
+            {/* <GuestNavigation /> */}
             <div className="relative flex items-top justify-center min-h-screen bg-gray-100 dark:bg-gray-900 sm:items-center sm:pt-0">
-                <div className="hidden fixed top-0 right-0 px-6 py-4 sm:block">
-                    <Link href="/">
-                            <a className="mx-4 text-sm text-gray-700 underline">
-                                Prototypes
-                            </a>
-                    </Link>
-
-                    {user ?
-                        <Link href="/admin/dashboard">
-                            <a className="ml-4 text-sm text-gray-700 underline">
-                                Dashboard
+                <div className="hidden flex w-full z-10 fixed flex-row top-0 px-6 min-h-12 sm:block backdrop-blur-md float-right py-2">
+                    {/* Logo */}
+                    <div className="flex-shrink-0">
+                        <Link href="/">
+                            <a> 
+                                <img
+                                    src='/images/logo4.PNG'
+                                    className='block h-12 w-auto fill-current'
+                                    />
                             </a>
                         </Link>
-                        :
-                        <>
-                            <Link href="/login">
-                                <a className="text-sm text-gray-700 underline">Login</a>
-                            </Link>
+                    </div>
+                    {/* Mav Links  */}
+                    <div className='absolute right-6 bottom-6'>
+                        <Link href="/">
+                                <a className="mx-4 text-sm text-gray-300 no-underline">
+                                    Prototypes
+                                </a>
+                        </Link>
 
-                            <Link href="/register">
-                                <a className="ml-4 text-sm text-gray-700 underline">
-                                    Register
+                        {user ?
+                            <Link href="/admin/dashboard">
+                                <a className="ml-4 text-sm text-gray-300 no-underline">
+                                    Dashboard
                                 </a>
                             </Link>
-                        </>
-                    }
-                </div>
+                            :
+                            <>
+                                <Link href="/login">
+                                    <a className="text-sm text-gray-300 no-underline">Login</a>
+                                </Link>
 
-                <div className="max-w-6xl mx-auto sm:px-6 lg:px-8">
+                                <Link href="/register">
+                                    <a className="ml-4 text-sm text-gray-300 no-underline">
+                                        Register
+                                    </a>
+                                </Link>
+                            </>
+                        }
+                    </div>
+                </div>
+                <div className="mt-24 max-w-6xl mx-auto sm:px-6 lg:px-8">
 
                     {/* Prototype card  */}
                     <PrototypeCard prototypes={ prototypes } />

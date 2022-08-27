@@ -31,7 +31,7 @@ export default function PrototypeCard({ prototypes }) {
               <div className="proto-card-text">
                 { url = "/prototypes/" + prototype.id }
                 <Link href={ url }>
-                  <a>
+                  <a className='no-underline'>
                     <h4 className='text-white mt-2'>
                       { prototype.title }
                     </h4>
