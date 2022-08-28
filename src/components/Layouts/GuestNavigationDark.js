@@ -3,19 +3,17 @@ import Dropdown from '@/components/Dropdown'
 import DropdownLink, { DropdownMultiItems } from '@/components/DropdownLink'
 import Link from 'next/link'
 import Image from 'next/image'
-import NavLink from '@/components/NavLink'
+import { NavLinkDark } from '@/components/NavLink'
 import ResponsiveNavLink, { ResponsiveNavButton } from '@/components/ResponsiveNavLink'
 import { DropdownButton } from '@/components/DropdownLink'
 import { useAuth } from '@/hooks/auth'
 import { useRouter } from 'next/router'
 import { useState } from 'react'
 
-const GuestNavigation = ({ user, ...props }) => {
+const GuestNavigationDark = ({ user, ...props }) => {
     const router = useRouter()
 
     const { logout } = useAuth()
-
-    // const { user } = useAuth({ middleware: 'guest' }) // Added
 
     const [open, setOpen] = useState(false)
 
@@ -29,7 +27,6 @@ const GuestNavigation = ({ user, ...props }) => {
                         <div className="flex-shrink-0 flex items-center">
                             <Link href="/">
                                 <a> 
-                                    {/* <ApplicationLogo className="block h-10 w-auto fill-current text-gray-600" /> */}
                                     <img
                                         src='/images/logo4.PNG'
                                         className='block h-12 w-auto fill-current'
@@ -40,30 +37,30 @@ const GuestNavigation = ({ user, ...props }) => {
 
                         {/* Navigation Links */}
                         <div className="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex top-5">
-                            <NavLink 
+                            <NavLinkDark 
                                 href="/"
                                 active={router.pathname === '/'}>
                                 Prototypes
-                            </NavLink>
+                            </NavLinkDark>
                             {user ?
-                                <NavLink 
+                                <NavLinkDark 
                                     href="/admin/dashboard"
                                     active={router.pathname === '/admin/dashboard'}>
                                         Dashboard
-                                </NavLink>
+                                </NavLinkDark>
                                 :
                                 <>
-                                    <NavLink 
+                                    <NavLinkDark 
                                         href="/login"
                                         active={router.pathname === '/login'}>
                                             Login
-                                    </NavLink>
+                                    </NavLinkDark>
 
-                                    <NavLink 
+                                    <NavLinkDark 
                                         href="/register"
                                         active={router.pathname === '/register'}>
                                             Register
-                                    </NavLink>
+                                    </NavLinkDark>
                                 </>
                             }
                         </div>
@@ -102,7 +99,10 @@ const GuestNavigation = ({ user, ...props }) => {
                             :
                             <DropdownButton>
                                 <Link href='/login'>
-                                    Login
+                                    <a 
+                                     className='no-underline'>
+                                        Login
+                                     </a>
                                 </Link>
                             </DropdownButton>
                             }
@@ -215,4 +215,4 @@ const GuestNavigation = ({ user, ...props }) => {
     )
 }
 
-export default GuestNavigation
+export default GuestNavigationDark

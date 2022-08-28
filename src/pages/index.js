@@ -3,11 +3,14 @@ import Link from 'next/link'
 import Card from '@/components/Card'
 import { getAllPrototypes } from "@/lib/fetch";
 import { useAuth } from '@/hooks/auth'
+import { useState } from 'react';
 import PrototypeCard from '@/components/PrototypeCard'
-import GuestNavigation from '@/components/Layouts/GuestNavigation';
+import GuestNavigationDark from '@/components/Layouts/GuestNavigationDark';
 
 export default function Home({ prototypes }) {
     const { user } = useAuth()
+
+    const [dark, setDark] = useState(true)
     
     let url
 
@@ -19,11 +22,11 @@ export default function Home({ prototypes }) {
             <Head>
                 <title>Prime Protoypes</title>
             </Head>
-            {/* <GuestNavigation /> */}
+            <GuestNavigationDark user={ user } dark={ dark } className="bg-transparent backdrop-blur-md fixed top-0 z-10 w-full" />
             <div className="relative flex items-top justify-center min-h-screen bg-gray-100 dark:bg-gray-900 sm:items-center sm:pt-0">
-                <div className="hidden flex w-full z-10 fixed flex-row top-0 px-6 min-h-12 sm:block backdrop-blur-md float-right py-2">
+                {/* <div className="hidden flex w-full z-10 fixed flex-row top-0 px-6 min-h-12 sm:block backdrop-blur-md float-right py-2"> */}
                     {/* Logo */}
-                    <div className="flex-shrink-0">
+                    {/* <div className="flex-shrink-0">
                         <Link href="/">
                             <a> 
                                 <img
@@ -32,9 +35,9 @@ export default function Home({ prototypes }) {
                                     />
                             </a>
                         </Link>
-                    </div>
+                    </div> */}
                     {/* Mav Links  */}
-                    <div className='absolute right-6 bottom-6'>
+                    {/* <div className='absolute right-6 bottom-6'>
                         <Link href="/">
                                 <a className="mx-4 text-sm text-gray-300 no-underline">
                                     Prototypes
@@ -60,8 +63,8 @@ export default function Home({ prototypes }) {
                                 </Link>
                             </>
                         }
-                    </div>
-                </div>
+                    </div> */}
+                {/* </div> */}
                 <div className="mt-24 max-w-6xl mx-auto sm:px-6 lg:px-8">
 
                     {/* Prototype card  */}
