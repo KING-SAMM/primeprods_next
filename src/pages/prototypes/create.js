@@ -7,11 +7,11 @@ const create = () => {
     const { user } = useAuth({ middleware: 'auth' })
 
   return (
-    <div class="py-16 text-center text-white bg-gray-200 ">
+    <div class="py-16 text-center text-gray-700 bg-gray-200 ">
         {/* Navigation  */}
         <GuestNavigationDark user={ user } className="bg-transparent backdrop-blur-md fixed top-0 z-10 w-full" />
 
-        <div className="flex flex-col w-[96%] md:w-3/5 lg:w-2/5 mx-auto my-8 rounded-xl bg-[#1E2E4D] rounded-lg">
+        <div className="flex flex-col w-[96%] md:w-3/5 lg:w-2/5 mx-auto my-8 rounded-xl bg-white rounded-lg">
             <header className="my-4">
                 <h2 className='px-2'>Add a product prototype</h2>
             </header>
@@ -23,7 +23,7 @@ const create = () => {
                 <div class="mb-6">
                     <label class="inline-block text-lg mb-2" for="title">Prototype Title</label>
                     <input 
-                        class="text-gray-600 border border-indigo-200 rounded p-2 w-full" 
+                        className="text-gray-600 border-2 border-indigo-300 rounded p-2 w-full" 
                         type="text" 
                         name="title" 
                         id="title" 
@@ -38,7 +38,7 @@ const create = () => {
                 <div class="mb-6">
                     <label class="inline-block text-lg mb-2" for="image">Prototype Image</label>
                     <input 
-                        class="text-white border border-indigo-200 rounded p-2 w-full" 
+                        className="text-white border-2 border-indigo-300 rounded p-2 w-full" 
                         type="file" 
                         name="image" 
                         id="image" 
@@ -53,7 +53,7 @@ const create = () => {
                 <div class="mb-6">
                     <label class="inline-block text-lg mb-2" for="company">Company Name</label>
                     <input 
-                        class="text-gray-600 border border-indigo-200 rounded p-2 w-full" 
+                        className="text-gray-600 border-2 border-indigo-300 rounded p-2 w-full" 
                         type="text" 
                         name="company" 
                         id="company" 
@@ -68,7 +68,7 @@ const create = () => {
                 <div class="mb-6">
                     <label class="inline-block text-lg mb-2" for="location">Company Location</label>
                     <input 
-                        class="text-gray-600 border border-indigo-200 rounded p-2 w-full" 
+                        className="text-gray-600 border-2 border-indigo-300 rounded p-2 w-full" 
                         type="text" 
                         name="location" 
                         id="location" 
@@ -84,7 +84,7 @@ const create = () => {
                 <div class="mb-6">
                     <label class="inline-block text-lg mb-2" for="email">Company Email</label>
                     <input 
-                        class="text-gray-600 border border-indigo-200 rounded p-2 w-full" 
+                        className="text-gray-600 border-2 border-indigo-300 rounded p-2 w-full" 
                         type="text" 
                         name="email" 
                         id="email" 
@@ -99,7 +99,7 @@ const create = () => {
                 <div class="mb-6">
                     <label class="inline-block text-lg mb-2" for="logo">Company Logo</label>
                     <input 
-                        class="text-white border border-indigo-200 rounded p-2 w-full" 
+                        className="text-white border-2 border-indigo-300 rounded p-2 w-full" 
                         type="file" 
                         name="logo" 
                         id="logo" 
@@ -114,7 +114,7 @@ const create = () => {
                 <div class="mb-6">
                     <label class="inline-block text-lg mb-2" for="website">Company/Prototype Website</label>
                     <input 
-                        class="text-gray-600 border border-indigo-200 rounded p-2 w-full" 
+                        className="text-gray-600 border-2 border-indigo-300 rounded p-2 w-full" 
                         type="text" 
                         name="website" 
                         id="website" 
@@ -130,7 +130,7 @@ const create = () => {
                 <div class="mb-6">
                     <label class="inline-block text-lg mb-2" for="tags">Tags (comma separated)</label>
                     <input 
-                        class="text-gray-600 border border-indigo-200 rounded p-2 w-full" 
+                        className="text-gray-600 border-2 border-indigo-300 rounded p-2 w-full" 
                         type="text" 
                         name="tags" 
                         id="tags" 
@@ -149,7 +149,7 @@ const create = () => {
                         name="description" 
                         id="description" 
                         rows="10" 
-                        class="text-gray-600 border border-indigo-200 rounded p-2 w-full"
+                        className="text-gray-600 border-2 border-indigo-300 rounded p-2 w-full"
                         placeholder="Write a detailed description of the product"
                     >
                         {/* {{ old('description') }} */}
@@ -161,7 +161,7 @@ const create = () => {
                 </div>
 
                 <div class="mb-6">
-                    <button class="bg-[#3E4E8D] rounded py-2 px-4 text-white hover:bg-[#1A2A39]">Create Prototype</button>
+                    <button className="bg-[#3E4E8D] rounded py-2 px-4 text-white hover:bg-[#1A2A39]">Create Prototype</button>
                 </div>
             </form>
         </div>
