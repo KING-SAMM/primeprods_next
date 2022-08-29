@@ -11,9 +11,9 @@ const create = () => {
         {/* Navigation  */}
         <GuestNavigationDark user={ user } className="bg-transparent backdrop-blur-md fixed top-0 z-10 w-full" />
 
-        <div className="flex flex-col w-2/5 mx-auto my-8 rounded-xl bg-[#1E2E4D] rounded-lg">
-            <header class="my-4">
-                <h2>Add a product prototype</h2>
+        <div className="flex flex-col w-[96%] md:w-3/5 lg:w-2/5 mx-auto my-8 rounded-xl bg-[#1E2E4D] rounded-lg">
+            <header className="my-4">
+                <h2 className='px-2'>Add a product prototype</h2>
             </header>
 
             {/* Begin Form  */}

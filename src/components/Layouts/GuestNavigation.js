@@ -166,6 +166,11 @@ const GuestNavigation = ({ user, ...props }) => {
                             active={router.pathname === '/admin/dashboard'}>
                             Dashboard
                         </ResponsiveNavLink>
+                        <ResponsiveNavLink
+                            href="/prototypes/create"
+                            active={router.pathname === '/prototypes/create'}>
+                            Add New
+                        </ResponsiveNavLink>
                     </div>
 
                     {/* Responsive Settings Options */}
