@@ -50,6 +50,21 @@ export const useAuth = ({ middleware, redirectIfAuthenticated } = {}) => {
             })
     }
 
+    const createPrototype = async ({ setErrors, ...props }) => {
+        await csrf()
+
+        setErrors([])
+
+        axios
+            .post('/prototypes', props)
+            .then(() => mutate())
+            .catch(error => {
+                if (error.response.status !== 422) throw error
+
+                setErrors(Object.values(error.response.data.errors).flat())
+            })
+    }
+
     const forgotPassword = async ({ setErrors, setStatus, email }) => {
         await csrf()
 
@@ -108,6 +123,7 @@ export const useAuth = ({ middleware, redirectIfAuthenticated } = {}) => {
         user,
         register,
         login,
+        createPrototype,
         forgotPassword,
         resetPassword,
         resendEmailVerification,

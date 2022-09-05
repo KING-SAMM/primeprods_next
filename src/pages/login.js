@@ -112,7 +112,7 @@ const Login = () => {
 
                     <div className="flex items-center justify-end mt-4">
                         <Link href="/forgot-password">
-                            <a className="underline text-sm text-[#4E5E7D] hover:text-[#1E2E4D]">
+                            <a className="no-underline hover:underline text-sm text-[#4E5E7D] hover:text-[#1E2E4D]">
                                 Forgot your password?
                             </a>
                         </Link>

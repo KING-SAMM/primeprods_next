@@ -1,13 +1,39 @@
 import GuestNavigationDark from '@/components/Layouts/GuestNavigationDark'
 import { useAuth } from '@/hooks/auth'
-import React from 'react'
+import Input from '@/components/Input'
+import Label from '@/components/Label'
+import AuthValidationErrors from '@/components/AuthValidationErrors'
+import React, { useState } from 'react'
+import AuthCard from '@/components/AuthCard'
 
-const create = () => {
+const Create = () => {
     // Get the currently authenticated user if any
     const { user } = useAuth({ middleware: 'auth' })
+    const { createPrototype } = useAuth({ 
+        middleware: 'auth' })
+
+    // Initial input state 
+    const [title, setTitle] = useState('')
+    const [image, setImage] = useState('')
+    const [company, setCompany] = useState('')
+    const [location, setLocation] = useState('')
+    const [email, setEmail] = useState('')
+    const [logo, setLogo] = useState('')
+    const [website, setWebsite] = useState('')
+    const [tags, setTags] = useState('')
+    const [description, setDescription] = useState('')
+    const [errors, setErrors] = useState([])
+
+    const submitForm = event => {
+        event.preventDefault()
+
+        createPrototype({ title, image, company, location, email, logo, website, tags, description, setErrors })
+
+        console.log(title, image, company, location, email, logo, website, tags, description)
+    }
 
   return (
-    <div class="py-16 text-center text-gray-700 bg-gray-200 ">
+    <div className="py-16 text-center text-gray-700 bg-gray-200 ">
         {/* Navigation  */}
         <GuestNavigationDark user={ user } className="bg-transparent backdrop-blur-md fixed top-0 z-10 w-full" />
 
@@ -15,158 +41,145 @@ const create = () => {
             <header className="my-4">
                 <h2 className='px-2'>Add a product prototype</h2>
             </header>
-
+            
+            {/* Validation Errors */}
+            <AuthValidationErrors className="mb-4" errors={errors} />
+        
             {/* Begin Form  */}
-            <form method="POST" action="/prototypes" enctype="multipart/form-data" class="p-6 ">
+            <form onSubmit={submitForm} className="p-6 shadow-md">
                 {/* @csrf */}
 
-                <div class="mb-6">
-                    <label class="inline-block text-lg mb-2" for="title">Prototype Title</label>
-                    <input 
-                        className="text-gray-600 border-2 border-indigo-300 rounded p-2 w-full" 
+                {/* Title  */}
+                <div className="mb-6">
+                    <Label className="inline-block text-lg mb-2" htmlFor="title">Prototype Title</Label>
+                    <Input 
+                        className="p-2 w-full" 
                         type="text" 
-                        name="title" 
+                        value={ title } 
                         id="title" 
-                        // value="{{ old('title') }}"
-                        />
-                    
-                    {/* @error('title')
-                        <p class="text-red-300 text-xs mt-1">{{ $message }}</p>
-                    @enderror */}
-                </div>
-
-                <div class="mb-6">
-                    <label class="inline-block text-lg mb-2" for="image">Prototype Image</label>
-                    <input 
-                        className="text-white border-2 border-indigo-300 rounded p-2 w-full" 
-                        type="file" 
-                        name="image" 
-                        id="image" 
-                        // value="{{ old('image') }}"
-                        />
-                    
-                    {/* @error('image')
-                        <p class="text-red-300 text-xs mt-1">{{ $message }}</p>
-                    @enderror */}
-                </div>
-
-                <div class="mb-6">
-                    <label class="inline-block text-lg mb-2" for="company">Company Name</label>
-                    <input 
-                        className="text-gray-600 border-2 border-indigo-300 rounded p-2 w-full" 
-                        type="text" 
-                        name="company" 
-                        id="company" 
-                        // value="{{ old('company') }}"
+                        onChange={event => setTitle(event.target.value)}
+                        required
+                        autoFocus
                     />
-                    
-                    {/* @error('company')
-                        <p class="text-red-300 text-xs mt-1">{{ $message }}</p>
-                    @enderror */}
                 </div>
 
-                <div class="mb-6">
-                    <label class="inline-block text-lg mb-2" for="location">Company Location</label>
-                    <input 
-                        className="text-gray-600 border-2 border-indigo-300 rounded p-2 w-full" 
+                {/* Prototype Image  */}
+                <div className="mb-6">
+                    <Label className="inline-block text-lg mb-2" htmlFor="image">Prototype Image</Label>
+                    <Input 
+                        className="p-2 w-full" 
+                        type="file" 
+                        value={ image } 
+                        id="image" 
+                        onChange={event => setImage(event.target.value)}
+                        // required
+                    />
+                </div>
+
+                {/* Company Name  */}
+                <div className="mb-6">
+                    <label className="inline-block text-lg mb-2" htmlFor="company">Company Name</label>
+                    <Input 
+                        className="p-2 w-full" 
                         type="text" 
-                        name="location" 
+                        value={ company } 
+                        id="company" 
+                        onChange={event => setCompany(event.target.value)}
+                        required
+                    />
+                </div>
+
+                {/* Company Location  */}
+                <div className="mb-6">
+                    <label className="inline-block text-lg mb-2" htmlFor="location">Company Location</label>
+                    <Input 
+                        className="p-2 w-full" 
+                        type="text" 
+                        value={ location } 
                         id="location" 
                         placeholder="E.g: Onitsha, Anambra, Nigeria"
-                        // value="{{ old('location') }}"
+                        onChange={event => setLocation(event.target.value)}
+                        required
                     />
-                    
-                    {/* @error('location')
-                        <p class="text-red-300 text-xs mt-1">{{ $message }}</p>
-                    @enderror */}
                 </div>
 
-                <div class="mb-6">
-                    <label class="inline-block text-lg mb-2" for="email">Company Email</label>
-                    <input 
-                        className="text-gray-600 border-2 border-indigo-300 rounded p-2 w-full" 
+                {/* Company Email  */}
+                <div className="mb-6">
+                    <label className="inline-block text-lg mb-2" htmlFor="email">Company Email</label>
+                    <Input 
+                        className="p-2 w-full" 
                         type="text" 
-                        name="email" 
+                        value={ email } 
                         id="email" 
-                        // value="{{ old('email') }}"
+                        onChange={event => setEmail(event.target.value)}
+                        required
                     />
-                    
-                    {/* @error('email')
-                        <p class="text-red-300 text-xs mt-1">{{ $message }}</p>
-                    @enderror */}
                 </div>
 
-                <div class="mb-6">
-                    <label class="inline-block text-lg mb-2" for="logo">Company Logo</label>
-                    <input 
-                        className="text-white border-2 border-indigo-300 rounded p-2 w-full" 
+                {/* Company Logo  */}
+                <div className="mb-6">
+                    <label className="inline-block text-lg mb-2" htmlFor="logo">Company Logo</label>
+                    <Input 
+                        className="p-2 w-full" 
                         type="file" 
-                        name="logo" 
+                        value={ logo } 
                         id="logo" 
-                        // value="{{ old('logo') }}"
-                        />
-                    
-                        {/* @error('logo')
-                        <p class="text-red-300 text-xs mt-1">{{ $message }}</p>
-                    @enderror */}
+                        onChange={event => setLogo(event.target.value)}
+                    />
                 </div>
 
-                <div class="mb-6">
-                    <label class="inline-block text-lg mb-2" for="website">Company/Prototype Website</label>
-                    <input 
-                        className="text-gray-600 border-2 border-indigo-300 rounded p-2 w-full" 
+                {/* Company/Prototype Website */}
+                <div className="mb-6">
+                    <label className="inline-block text-lg mb-2" htmlFor="website">Company/Prototype Website</label>
+                    <Input 
+                        className="p-2 w-full" 
                         type="text" 
-                        name="website" 
+                        value={ website } 
                         id="website" 
                         placeholder="E.g: https://awesomedomain.com"
-                        // value="{{ old('website') }}"
+                        onChange={event => setWebsite(event.target.value)}
+                        required
                     />
-                    
-                    {/* @error('website')
-                        <p class="text-red-300 text-xs mt-1">{{ $message }}</p>
-                    @enderror */}
                 </div>
                 
-                <div class="mb-6">
-                    <label class="inline-block text-lg mb-2" for="tags">Tags (comma separated)</label>
-                    <input 
-                        className="text-gray-600 border-2 border-indigo-300 rounded p-2 w-full" 
+                {/* Tags  */}
+                <div className="mb-6">
+                    <label className="inline-block text-lg mb-2" htmlFor="tags">Tags (comma separated)</label>
+                    <Input 
+                        className="p-2 w-full" 
                         type="text" 
-                        name="tags" 
+                        value={ tags } 
                         id="tags" 
                         placeholder="E.g: AI, anti-gravity"
-                        // value="{{ old('tags') }}"
+                        onChange={event => setTags(event.target.value)}
+                        required
                     />
-                    
-                    {/* @error('tags')
-                        <p class="text-red-300 text-xs mt-1">{{ $message }}</p>
-                    @enderror */}
                 </div>
                 
-                <div class="mb-6">
-                    <label class="inline-block text-lg mb-2" for="description">Prototype Description</label>
+                {/* Description  */}
+                <div className="mb-6">
+                    <label className="inline-block text-lg mb-2" htmlFor="description">Prototype Description</label>
                     <textarea 
-                        name="description" 
+                        value={ description } 
                         id="description" 
                         rows="10" 
                         className="text-gray-600 border-2 border-indigo-300 rounded p-2 w-full"
                         placeholder="Write a detailed description of the product"
+                        onChange={event => setDescription(event.target.value)}
+                        required
                     >
-                        {/* {{ old('description') }} */}
+                        
                     </textarea>
-                    
-                    {/* @error('description')
-                        <p class="text-red-300 text-xs mt-1">{{ $message }}</p>
-                    @enderror */}
                 </div>
 
-                <div class="mb-6">
+                <div className="mb-6">
                     <button className="bg-[#3E4E8D] rounded py-2 px-4 text-white hover:bg-[#1A2A39]">Create Prototype</button>
                 </div>
             </form>
+            
         </div>
     </div>
   )
 }
 
-export default create
+export default Create
