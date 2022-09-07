@@ -5,6 +5,7 @@ import AppLayout from '@/components/Layouts/AppLayout';
 import Head from 'next/head';
 import { FiSettings } from 'react-icons/fi';
 import { TooltipComponent } from '@syncfusion/ej2-react-popups';
+import '../../styles/dashboard.module.css';
 
 
 const Dashboard = () => {
@@ -12,43 +13,31 @@ const Dashboard = () => {
 
     return (
         <div>
-            
-                {/* <AppLayout
-                    header={
-                        <h2 className="font-semibold text-xl text-gray-800 leading-tight mt-4">
-                            Dashboard
-                        </h2>
-                    }>
+            <AppLayout
+                header={
+                    <h2 className="font-semibold text-xl text-gray-800 leading-tight mt-4">
+                        Dashboard
+                    </h2>
+                }>
 
-                    <Head>
-                        <title>Account - Dashboard</title>
-                    </Head>
+                <Head>
+                    <title>Account - Dashboard</title>
+                </Head>
                 
-                </AppLayout> */}
-
                 {/* Dashboard Code */}
                 <div className="flex relative dark:bg-main-dark-bg">
                     <div className="fixed right-4 bottom-4" style={{ zIndex: '1000'}}>
                         <TooltipComponent content="Settings" position="Top">
-                            <button>
+                            <button type="button" className="text-3xl p-3 hover:drop-shadow-xl hover:bg-light-gray text-white" style={{ background: 'blue', borderRadius: '50%'}}>
                                 <FiSettings />
                             </button>
                         </TooltipComponent>
                     </div>
                 </div>
-            
+            </AppLayout>
         </div>
     )
 }
-
-export async function getStaticProps() {
-    let data = null;
-
-    return {
-        props: { data }
-    }
-}
-
 
 
 export default Dashboard
