@@ -24,6 +24,16 @@ const Create = () => {
     const [description, setDescription] = useState('')
     const [errors, setErrors] = useState([])
 
+    const handleImage = (e) => {
+        const image = e.target.files[0];
+        console.log(image);
+    }
+
+    const handleLogo = (e) => {
+        const logo = e.target.files[0];
+        console.log(logo);
+    }
+
     const submitForm = event => {
         event.preventDefault()
 
@@ -69,9 +79,10 @@ const Create = () => {
                     <Input 
                         className="p-2 w-full" 
                         type="file" 
-                        value={ image } 
+                        // value={ image } 
                         id="image" 
-                        onChange={event => setImage(event.target.value)}
+                        onChange={ handleImage }
+                        // onChange={event => setImage(event.target.value)}
                         // required
                     />
                 </div>
@@ -122,9 +133,10 @@ const Create = () => {
                     <Input 
                         className="p-2 w-full" 
                         type="file" 
-                        value={ logo } 
+                        // value={ logo } 
                         id="logo" 
-                        onChange={event => setLogo(event.target.value)}
+                        onChange={ handleLogo }
+                        // onChange={event => setLogo(event.target.value)}
                     />
                 </div>
 
