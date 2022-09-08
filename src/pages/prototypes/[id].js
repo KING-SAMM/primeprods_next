@@ -50,7 +50,7 @@ export default function Prototype({ prototypes }) {
                                         <h4 className="font-bold">{ prototype.company }</h4>
                                         <p className="font-thin">{ prototype.location }</p>
                                         <p className="text-sm">{ prototype.email }</p>
-                                        <p className="text-sm">https://{ prototype.website }</p>
+                                        <p className="text-sm">{ prototype.website }</p>
                                     </div>
                                     <div className="mx-auto">
                                         <Image 

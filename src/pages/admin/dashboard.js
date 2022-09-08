@@ -9,7 +9,7 @@ import '../../styles/dashboard.module.css';
 
 
 const Dashboard = () => {
-    
+    const activeMenu = true;
 
     return (
         <div>
@@ -33,6 +33,28 @@ const Dashboard = () => {
                             </button>
                         </TooltipComponent>
                     </div>
+
+                    {/* Menu  */}
+                    { activeMenu ? (
+                        <div className="w-72 fixed sidebar dark:bg-secondary-dark-bg bg-white">
+                            Sidebar 
+                        </div>
+                    ) : (
+                        <div className="w-0 dark:bg-secondary-dark-bg">
+                            Diff Sidebar
+                        </div>
+                    ) }
+
+                    {/* Navbar menu items if menu is active or not */}
+                    <div className={ 
+                        `dark:bg-main-bg bg-main-bg min-h-screen w-full ${ activeMenu ? 'md:ml-72': 'flex-2' }`
+                     }>
+                        <div className="fixed md:satic bg-main-bg dark:bg-main-dark-bg navbar w-full">
+                            Navbar
+                        </div>
+                    </div>
+
+                    
                 </div>
             </AppLayout>
         </div>
