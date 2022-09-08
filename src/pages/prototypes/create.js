@@ -24,14 +24,39 @@ const Create = () => {
     const [description, setDescription] = useState('')
     const [errors, setErrors] = useState([])
 
+    // State variables for files to be sent to api (backend) server 
+    const [imageInput, setImageInput] = useState(null)
+    const [logoInput, setLogoInput] = useState(null)
+
     const handleImage = (e) => {
-        const image = e.target.files[0];
-        console.log(image);
+        // Get the image file 
+        const imageFile = e.target.files[0];
+
+        // Send image file (with form) to api 
+        setImageInput(imageFile);
+
+        const fileReader = new FileReader();
+        fileReader.onload = function(e) {
+            console.log(e.target.result);
+            // Display uploaded file on the page 
+            setImage(e.target.result);
+        }
+        // convert file to binary 
+        fileReader.readAsDataURL(imageFile);
     }
 
     const handleLogo = (e) => {
-        const logo = e.target.files[0];
-        console.log(logo);
+        // Get the logo file 
+        const logoFile = e.target.files[0];
+        setLogoInput(logoFile);
+
+        const fileReader = new FileReader();
+        fileReader.onload = function(e) {
+            console.log(e.target.result);
+            setLogo(e.target.result);
+        }
+        // convert file to binary 
+        fileReader.readAsDataURL(logoFile);
     }
 
     const submitForm = event => {
@@ -47,7 +72,7 @@ const Create = () => {
         {/* Navigation  */}
         <GuestNavigationDark user={ user } className="bg-transparent backdrop-blur-md fixed top-0 z-10 w-full" />
 
-        <div className="flex flex-col w-[96%] md:w-3/5 lg:w-2/5 mx-auto my-8 rounded-xl bg-white rounded-lg">
+        <div className="flex flex-col w-[96%] md:w-3/5 lg:w-2/5 mx-auto my-8 rounded-xl bg-white">
             <header className="my-4">
                 <h2 className='px-2'>Add a product prototype</h2>
             </header>
@@ -76,6 +101,8 @@ const Create = () => {
                 {/* Prototype Image  */}
                 <div className="mb-6">
                     <Label className="inline-block text-lg mb-2" htmlFor="image">Prototype Image</Label>
+                    {/* Display image on page  */}
+                    {image && <img src={ image } className="w-full md:w-1/2 lg:w-[200px] block mx-auto" alt="" />}
                     <Input 
                         className="p-2 w-full" 
                         type="file" 
