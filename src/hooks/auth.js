@@ -1,5 +1,5 @@
 import useSWR from 'swr'
-import axios from '@/lib/axios'
+import axios, { axiosMultipartFormData } from '@/lib/axios'
 import { useEffect } from 'react'
 import { useRouter } from 'next/router'
 

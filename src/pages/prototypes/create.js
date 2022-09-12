@@ -14,31 +14,34 @@ const Create = () => {
 
     // Initial input state 
     const [title, setTitle] = useState('')
-    const [image, setImage] = useState('')
+    const [compImage, setCompImage] = useState('')
     const [company, setCompany] = useState('')
     const [location, setLocation] = useState('')
     const [email, setEmail] = useState('')
-    const [logo, setLogo] = useState('')
+    const [compLogo, setCompLogo] = useState('')
     const [website, setWebsite] = useState('')
     const [tags, setTags] = useState('')
     const [description, setDescription] = useState('')
     const [errors, setErrors] = useState([])
 
     // State variables for files to be sent to api (backend) server 
-    const [imageInput, setImageInput] = useState(null)
-    const [logoInput, setLogoInput] = useState(null)
+    const [image, setImage] = useState(null);
+    const [imageInput, setImageInput] = useState(null);
+    const [logo, setLogo] = useState({});
+    const [logoInput, setLogoInput] = useState(null);
 
     const handleImage = (e) => {
         // Get the image file 
         const imageFile = e.target.files[0];
+        console.log("Image file is: ", imageFile);
 
         // Send image file (with form) to api 
         setImageInput(imageFile);
 
         const fileReader = new FileReader();
         fileReader.onload = function(e) {
-            console.log(e.target.result);
             // Display uploaded file on the page 
+            console.log("e.target.result is: ", e.target.result);
             setImage(e.target.result);
         }
         // convert file to binary 
@@ -46,13 +49,17 @@ const Create = () => {
     }
 
     const handleLogo = (e) => {
-        // Get the logo file 
+        // Get the image file 
         const logoFile = e.target.files[0];
+        console.log("Logo file is: ", logoFile);
+
+        // Send logo file (with form) to api 
         setLogoInput(logoFile);
 
         const fileReader = new FileReader();
         fileReader.onload = function(e) {
-            console.log(e.target.result);
+            // Display uploaded file on the page 
+            console.log("e.target.result is: ", e.target.result);
             setLogo(e.target.result);
         }
         // convert file to binary 
@@ -157,6 +164,10 @@ const Create = () => {
                 {/* Company Logo  */}
                 <div className="mb-6">
                     <label className="inline-block text-lg mb-2" htmlFor="logo">Company Logo</label>
+
+                    {/* Display logo on page  */}
+                    {logo && <img src={ logo } className="w-full md:w-1/2 lg:w-[200px] block mx-auto" alt="" />}
+
                     <Input 
                         className="p-2 w-full" 
                         type="file" 
