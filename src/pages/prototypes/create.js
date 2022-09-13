@@ -35,7 +35,7 @@ const Create = () => {
         const imageFile = e.target.files[0];
         console.log("Image file is: ", imageFile);
 
-        // Send image file (with form) to api 
+        // Set image file to be sent with form 
         setImageInput(imageFile);
         console.log("Image input is: ", imageInput)
 
@@ -54,7 +54,7 @@ const Create = () => {
         const logoFile = e.target.files[0];
         console.log("Logo file is: ", logoFile);
 
-        // Send logo file (with form) to api 
+        // Set logo file to be sent with form 
         setLogoInput(logoFile);
 
         const fileReader = new FileReader();
@@ -70,6 +70,7 @@ const Create = () => {
     const submitForm = async (event) => {
         event.preventDefault()
 
+        // Prepare form fields and files to send to api
         const form = new FormData();
         form.append('title', title)
         form.append('image', imageInput)
@@ -81,9 +82,11 @@ const Create = () => {
         form.append('tags', tags)
         form.append('description', description)
 
-        createPrototype({ setErrors , form })
+        // Send form data to api 
+        const result = await createPrototype({ setErrors , form })
 
-        console.log("result is: ", ...form)
+        console.log("result is: ", )
+        console.log("form data is: ", ...form)
     }
 
   return (

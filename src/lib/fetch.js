@@ -3,7 +3,7 @@ export async function getAllPrototypes(id)
     return await fetch('http://localhost:8000/api')
         .then( response => response.json())
         .then(response => {
-            response = response.prototypes.data
+            response = response.prototypes
             if (id) {
                 return response.filter(prototype => prototype.id == id)
             }
@@ -11,6 +11,11 @@ export async function getAllPrototypes(id)
         })
         .catch(err => console.error("ERROR is ",err));
 }
+
+// export async function getPageDetails()
+// {
+//     return await fetch('http://localhost:8000')
+// }
 
 export async function getAllUsers(id)
 {

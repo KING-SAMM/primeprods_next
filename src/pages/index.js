@@ -7,15 +7,45 @@ import { useState } from 'react';
 import PrototypeCard from '@/components/PrototypeCard'
 import GuestNavigationDark from '@/components/Layouts/GuestNavigationDark';
 
-export default function Home({ prototypes }) {
+export default function Home({ ...prototypesObj }) {
     const { user } = useAuth()
 
-    const [dark, setDark] = useState(true)
-    
-    let url
+    const [dark, setDark] = useState(true);
+
+    const {
+        first_page_url,
+        last_page_url,
+        current_page,
+        data,
+        from,
+        last_page,
+    } = prototypesObj;
+
+    // console.log(current_page, data, from, last_page, last_page_url, first_page_url);
+
+    let url;
 
     // Image variable 
     const imgUrl = "https://www.notebookcheck.net/fileadmin/_processed_/f/3/csm_csm_Oppo_Watch_3_Render_2_7ef6882bff_4393f5078f.jpg"
+
+    const [prototypesList, setPrototypesList] = useState(data);
+    const [page, setPage] = useState(1);
+
+    // console.log("Prototypes list is: ", prototypesList)
+
+    const loadPreviousPrototypes = async (res) => {
+        res =  await fetch(`http://localhost:8000/api?page=${ page - 1 }`);
+        res = await res.json();
+        res = res.prototypes;
+
+        ({ current_page, data } = res );
+
+        console.log("New page is: ", current_page, data);
+
+        setPrototypesList(res => [...res]);
+    }
+
+    const loadNextPrototypes = async () => {};
 
     return (
         <>
@@ -68,8 +98,20 @@ export default function Home({ prototypes }) {
                 <div className="mt-24 max-w-6xl mx-auto sm:px-6 lg:px-8">
 
                     {/* Prototype card  */}
-                    <PrototypeCard prototypes={ prototypes } />
+                    <PrototypeCard 
+                        prototypesList={ prototypesList } />
                 </div>
+
+                <button 
+                    onClick={ loadPreviousPrototypes }
+                    className='text-red-900 text-2xl fixed bottom-6 left-0'>
+                        Prev
+                </button>
+                <button 
+                    onClick={ loadNextPrototypes }
+                    className='text-red-900 text-2xl fixed bottom-6 left-12'>
+                        Next
+                </button>
             </div>
         </>
     )
@@ -77,9 +119,11 @@ export default function Home({ prototypes }) {
 
 
 export async function getStaticProps() {
-    const prototypes = await getAllPrototypes()
-
+    const prototypesObj = await getAllPrototypes()
+    
     return {
-      props: { prototypes }
+      props: {
+        ...prototypesObj
+      }
     }
 }

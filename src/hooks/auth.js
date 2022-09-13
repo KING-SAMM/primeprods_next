@@ -55,7 +55,7 @@ export const useAuth = ({ middleware, redirectIfAuthenticated } = {}) => {
 
         setErrors([])
 
-        axiosMultipartFormData
+        const response = await axiosMultipartFormData
             .post('/api/prototypes/create', form)
             .then(() => mutate())
             .catch(error => {
@@ -63,6 +63,7 @@ export const useAuth = ({ middleware, redirectIfAuthenticated } = {}) => {
 
                 setErrors(Object.values(error.response.data.errors).flat())
             })
+        return response.message;
     }
 
     const forgotPassword = async ({ setErrors, setStatus, email }) => {

@@ -53,7 +53,7 @@ export default function Prototype({ prototypes }) {
                                         <p className="text-sm">{ prototype.website }</p>
                                     </div>
                                     <div className="mx-auto">
-                                        <Image 
+                                        <image 
                                             src={ prototype.logo ? prototype.logo : logo } 
                                             alt="Company logo"
                                             width={150}
@@ -100,6 +100,6 @@ export async function getStaticPaths() {
 
     return {
         paths,
-        fallback: false
+        fallback: "blocking" 
     }
 }

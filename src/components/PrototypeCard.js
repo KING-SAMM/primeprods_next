@@ -5,7 +5,7 @@ import Link from 'next/link'
 import Image  from 'next/image'
 // import { useRouter } from 'next/router'
 
-export default function PrototypeCard({ prototypes }) {
+export default function PrototypeCard({ prototypesList }) {
     // const router = useRouter()
 
     // Image variable - uninitialized
@@ -17,8 +17,8 @@ export default function PrototypeCard({ prototypes }) {
   return (
 
     <div class="u-effect-fade u-effect-hover-zoom relative">
-      {  prototypes ? 
-        prototypes.map(prototype => {
+      {  prototypesList ? 
+        prototypesList.map(prototype => {
           return (
           <Card className="" key={ prototype.id }>
               <div className="overflow-hidden">         
@@ -43,7 +43,7 @@ export default function PrototypeCard({ prototypes }) {
         )})
 
         :
-            <div className="text-5xl text-white">
+            <div className="text-5xl text-blue-400">
               No prototype found...
             </div>
       }

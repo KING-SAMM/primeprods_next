@@ -69,7 +69,7 @@ const GuestNavigationDark = ({ user, ...props }) => {
                     {/* add button and dropdown  */}
                     <div className="flex">
 
-                        {/* Add Prototype Buttin  */}
+                        {/* Add Prototype Button  */}
                         <div className="hidden mr-4 sm:flex sm:items-center sm:ml-6">
                             <a class="bg-[#3E5E6D] rounded-lg py-[4px] px-4" href="/prototypes/create">
                                 <button class="text-xs text-white pb-2">Add New</button>
