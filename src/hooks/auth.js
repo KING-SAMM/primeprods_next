@@ -50,13 +50,13 @@ export const useAuth = ({ middleware, redirectIfAuthenticated } = {}) => {
             })
     }
 
-    const createPrototype = async ({ setErrors, ...props }) => {
+    const createPrototype = async ({ setErrors , form }) => {
         await csrf()
 
         setErrors([])
 
-        axios
-            .post('/api/prototypes/create', props)
+        axiosMultipartFormData
+            .post('/api/prototypes/create', form)
             .then(() => mutate())
             .catch(error => {
                 if (error.response.status !== 422) throw error
