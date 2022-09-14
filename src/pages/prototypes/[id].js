@@ -9,11 +9,14 @@ import { useAuth } from "@/hooks/auth";
 export default function Prototype({ prototypes }) {
     // Get the currently authenticated user if any
     const { user } = useAuth({ middleware: 'guest' })
-    // Image variable 
+    // API image url
+    const imageUrlPath = "http://localhost:8000/storage/";
+    // Default image variable 
     const imgUrl = "https://www.notebookcheck.net/fileadmin/_processed_/f/3/csm_csm_Oppo_Watch_3_Render_2_7ef6882bff_4393f5078f.jpg"
 
     // Logo variable
     const logoUrl = "https://placeholder.com/wp-content/uploads/2018/10/placeholder.com-logo3.png"
+
 
     return (
         <GuestLayout>
@@ -33,8 +36,8 @@ export default function Prototype({ prototypes }) {
                         <div className="flex w-full flex-col md:flex-col lg:flex-row mt-10 lg:mt-15 px-2 ">
                             {/* Prototype Image   */}
                             <div className="flex-auto w-full lg:w-[40%] flex justify-center items-center">
-                                <img 
-                                    src={ prototype.image ? prototype.image : imgUrl }
+                                <Image 
+                                    src={ prototype.image ? imageUrlPath + prototype.image : `${imgUrl}`}
                                     layout='fill'
                                     alt="Porototype Image" />
                             </div>
@@ -53,8 +56,8 @@ export default function Prototype({ prototypes }) {
                                         <p className="text-sm">{ prototype.website }</p>
                                     </div>
                                     <div className="mx-auto">
-                                        <image 
-                                            src={ prototype.logo ? prototype.logo : logo } 
+                                        <img 
+                                            src={ prototype.logo ? imageUrlPath + prototype.logo : logo } 
                                             alt="Company logo"
                                             width={150}
                                             className="mt-2 object-contain lg:object-contain" />
@@ -86,13 +89,19 @@ export async function getStaticProps({ params }) {
     const { id } = params;
     const prototypes = await getAllPrototypes(id);
 
+    console.log("Prototypes list is: ", prototypes);
+
     return {
         props: { prototypes }
     }
 }
 
 export async function getStaticPaths() {
-    const prototypes = await getAllPrototypes();                  
+    const prototypesObj = await getAllPrototypes();  
+    
+    const { data } = prototypesObj;
+
+    const prototypes = data;
 
     const paths = prototypes.map(prototype => ({
         params: { id: prototype.id.toString() }

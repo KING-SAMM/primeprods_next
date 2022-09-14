@@ -12,6 +12,7 @@ export default function Home({ ...prototypesObj }) {
 
     const [dark, setDark] = useState(true);
 
+    // Destructure properties from prototypes object
     let {
         first_page,
         last_page,
@@ -24,32 +25,33 @@ export default function Home({ ...prototypesObj }) {
         from,
     } = prototypesObj;
 
-    // console.log(current_page, data, from, last_page, last_page_url, first_page_url);
-
     let url;
 
     // Image variable 
     const imgUrl = "https://www.notebookcheck.net/fileadmin/_processed_/f/3/csm_csm_Oppo_Watch_3_Render_2_7ef6882bff_4393f5078f.jpg"
 
+    // Initial state of prototypes listings
     const [prototypesList, setPrototypesList] = useState(data);
+    //Inital page is first page (i.e 1)
     let [currentPage, setCurrentPage] = useState(1);
 
-    console.log("type of current_page: ", typeof(current_page));
+    // console.log("Initial current_page is: ", current_page);
 
-    console.log("Initial current_page is: ", current_page);
-
-    // console.log("Prototypes list is: ", prototypesList)
-
-    const loadPreviousPrototypes = async (prevRes) => {
+    // Previous Page 
+    const loadPreviousPrototypes = async (prevPrototypesObj) => {
         current_page = currentPage;
         
-        (current_page <= first_page) ? setCurrentPage(first_page): (current_page = current_page - 1);
+        // if the current_page is lower than first (invalid) set currentPage 
+        // to be the first page. Else move current_page to a lower page
+        (current_page <= first_page) ? setCurrentPage(first_page) : (current_page = current_page - 1);
         
-        prevRes =  await fetch(`http://localhost:8000/api?page=${ current_page }`);
-        prevRes = await prevRes.json();
-        prevRes = prevRes.prototypes;
+        // Fetch prototypesObject from this current page
+        prevPrototypesObj =  await fetch(`http://localhost:8000/api?page=${ current_page }`);
+        prevPrototypesObj = await prevPrototypesObj.json();
+        prevPrototypesObj = prevPrototypesObj.prototypes;
 
-        ({ current_page, data } = prevRes );
+        // Destructure properties e.g new current_page and new data from new prototypesObj (i.e prevPrototypesObj)
+        ({ current_page, data } = prevPrototypesObj );
 
         currentPage = current_page;
 
@@ -57,22 +59,23 @@ export default function Home({ ...prototypesObj }) {
 
         console.log("New page is: ", current_page, data); // 2
 
-        setPrototypesList(prevRes => [...prevRes]);
+        setPrototypesList(data);
+        // console.log("New pototypesList is", prototypesList);
 
         setCurrentPage(current_page);
     }
 
-    
-    const loadNextPrototypes = async (nextRes) => {
+    // Next Page
+    const loadNextPrototypes = async (nextPrototypesObj) => {
         current_page = currentPage;
         
         (current_page >= last_page) ? setCurrentPage(last_page): (current_page = current_page + 1);
         
-        nextRes =  await fetch(`http://localhost:8000/api?page=${ current_page }`);
-        nextRes = await nextRes.json();
-        nextRes = nextRes.prototypes;
+        nextPrototypesObj =  await fetch(`http://localhost:8000/api?page=${ current_page }`);
+        nextPrototypesObj = await nextPrototypesObj.json();
+        nextPrototypesObj = nextPrototypesObj.prototypes;
 
-        ({ current_page, data } = nextRes );
+        ({ current_page, data } = nextPrototypesObj );
 
         currentPage = current_page;
 
@@ -80,7 +83,8 @@ export default function Home({ ...prototypesObj }) {
 
         console.log("New page is: ", current_page, data); // 2
 
-        setPrototypesList(nextRes => [...nextRes]);
+        setPrototypesList(data);
+        // console.log("New pototypesList is", prototypesList);
 
         setCurrentPage(current_page);
     };

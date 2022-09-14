@@ -5,7 +5,7 @@ export async function getAllPrototypes(id)
         .then(response => {
             response = response.prototypes
             if (id) {
-                return response.filter(prototype => prototype.id == id)
+                return response.data.filter(prototype => prototype.id == id)
             }
             return response;
         })

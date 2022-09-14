@@ -8,6 +8,9 @@ import Image  from 'next/image'
 export default function PrototypeCard({ prototypesList }) {
     // const router = useRouter()
 
+    // API image path
+    const imageUrlPath = "http://localhost:8000/storage/";
+
     // Image variable - uninitialized
     let url
 
@@ -23,7 +26,7 @@ export default function PrototypeCard({ prototypesList }) {
           <Card className="" key={ prototype.id }>
               <div className="overflow-hidden">         
                   <img
-                    src={imgUrl}
+                    src={prototype.image ? imageUrlPath+prototype.image :`${imgUrl}`}
                     className="w-full h-full object-cover bg-cover transition-transform duration-500 ease-in-out scale-100 bg-no-repeat bg-center lg:object-cover lg:h-[160px]"
                   />
               </div>
