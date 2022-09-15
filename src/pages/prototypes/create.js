@@ -13,16 +13,14 @@ const Create = () => {
         middleware: 'auth' })
 
     // Initial input state 
-    const [title, setTitle] = useState('')
-    const [compImage, setCompImage] = useState('')
-    const [company, setCompany] = useState('')
-    const [location, setLocation] = useState('')
-    const [email, setEmail] = useState('')
-    const [compLogo, setCompLogo] = useState('')
-    const [website, setWebsite] = useState('')
-    const [tags, setTags] = useState('')
-    const [description, setDescription] = useState('')
-    const [errors, setErrors] = useState([])
+    const [title, setTitle] = useState('');
+    const [company, setCompany] = useState('');
+    const [location, setLocation] = useState('');
+    const [email, setEmail] = useState('');
+    const [website, setWebsite] = useState('');
+    const [tags, setTags] = useState('');
+    const [description, setDescription] = useState('');
+    const [errors, setErrors] = useState([]);
 
     // State variables for files to be sent to api (backend) server 
     const [image, setImage] = useState(null);

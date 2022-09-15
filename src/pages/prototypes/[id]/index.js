@@ -1,7 +1,8 @@
 import { getAllPrototypes } from "@/lib/fetch";
 import GuestLayout from "@/components/Layouts/GuestLayout";
 import GuestNavigation from "@/components/Layouts/GuestNavigation";
-import logo from "../../../../public/images/logo.PNG";
+import { imageUrlPath, logoUrlPath, imgUrl, logo } from "@/constants";
+// import logo from "../../../../public/images/logo.PNG";
 import Image from "next/image";
 import Head from "next/head";
 import { useAuth } from "@/hooks/auth";
@@ -9,18 +10,6 @@ import { useAuth } from "@/hooks/auth";
 export default function Prototype({ prototype }) {
     // Get the currently authenticated user if any
     const { user } = useAuth({ middleware: 'guest' });
-
-    // API image url and logo url
-    const imageUrlPath = "http://localhost:8000/storage/";
-    const logoUrlPath = imageUrlPath;
-
-    // Default image variable 
-    const imgUrl = "https://www.notebookcheck.net/fileadmin/_processed_/f/3/csm_csm_Oppo_Watch_3_Render_2_7ef6882bff_4393f5078f.jpg";
-
-    // Default logo variable
-    const logo = "https://placeholder.com/wp-content/uploads/2018/10/placeholder.com-logo3.png";
-
-    
 
     return (
         <GuestLayout>

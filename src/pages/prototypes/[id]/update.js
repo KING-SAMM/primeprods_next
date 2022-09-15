@@ -3,6 +3,7 @@ import GuestNavigationDark from '@/components/Layouts/GuestNavigationDark'
 import { useAuth } from '@/hooks/auth'
 import Input from '@/components/Input'
 import Label from '@/components/Label'
+import { imageUrlPath, logoUrlPath } from "@/constants";
 import AuthValidationErrors from '@/components/AuthValidationErrors'
 import React, { useState } from 'react'
 import AuthCard from '@/components/AuthCard'
@@ -12,25 +13,56 @@ export default function Update({ prototype }) {
     const { user } = useAuth({ middleware: 'auth' });
 
     // Initial input state 
-    const [title, setTitle] = useState('')
-    const [compImage, setCompImage] = useState('')
-    const [company, setCompany] = useState('')
-    const [location, setLocation] = useState('')
-    const [email, setEmail] = useState('')
-    const [compLogo, setCompLogo] = useState('')
-    const [website, setWebsite] = useState('')
-    const [tags, setTags] = useState('')
-    const [description, setDescription] = useState('')
-    const [errors, setErrors] = useState([])
+    const [title, setTitle] = useState(prototype[0].title);
+    const [company, setCompany] = useState(prototype[0].company);
+    const [location, setLocation] = useState(prototype[0].location);
+    const [email, setEmail] = useState(prototype[0].email);
+    const [website, setWebsite] = useState(prototype[0].website);
+    const [tags, setTags] = useState(prototype[0].tags);
+    const [description, setDescription] = useState(prototype[0].description);
+    const [errors, setErrors] = useState([]);
 
     // State variables for files to be sent to api (backend) server 
-    const [image, setImage] = useState(null);
+    const [image, setImage] = useState(imageUrlPath+prototype[0].image);
     const [imageInput, setImageInput] = useState(null);
-    const [logo, setLogo] = useState({});
+    const [logo, setLogo] = useState(logoUrlPath+prototype[0].logo);
     const [logoInput, setLogoInput] = useState(null);
 
-    const handleImage = () => {};
-    const handleLogo = () => {};
+    const updateImage = (e) => {
+        // Get the image file 
+        const imageFile = e.target.files[0];
+        console.log("Image file is: ", imageFile);
+
+        // Set image file to be sent with form 
+        setImageInput(imageFile);
+        console.log("Image input is: ", imageInput)
+
+        const fileReader = new FileReader();
+        fileReader.onload = function(e) {
+            // Display uploaded file on the page 
+            console.log("e.target.result is: ", e.target.result);
+            setImage(e.target.result);
+        }
+        // convert file to binary 
+        fileReader.readAsDataURL(imageFile);
+    };
+    const updateLogo = (e) => {
+        // Get the image file 
+        const logoFile = e.target.files[0];
+        console.log("Logo file is: ", logoFile);
+
+        // Set logo file to be sent with form 
+        setLogoInput(logoFile);
+
+        const fileReader = new FileReader();
+        fileReader.onload = function(e) {
+            // Display uploaded file on the page 
+            console.log("e.target.result is: ", e.target.result);
+            setLogo(e.target.result);
+        }
+        // convert file to binary 
+        fileReader.readAsDataURL(logoFile);
+    };
 
     // Submit form
     const submitForm =async (event) => {
@@ -48,6 +80,8 @@ export default function Update({ prototype }) {
         form.append('tags', tags)
         form.append('description', description)
     };
+
+    console.log("Image path is: ", imageUrlPath+prototype[0].image);
 
 
   return (
@@ -91,7 +125,7 @@ export default function Update({ prototype }) {
                         type="file" 
                         // value={ image } 
                         id="image" 
-                        onChange={ handleImage }
+                        onChange={ updateImage }
                         // onChange={event => setImage(event.target.value)}
                         // required
                     />
@@ -149,7 +183,7 @@ export default function Update({ prototype }) {
                         type="file" 
                         // value={ logo } 
                         id="logo" 
-                        onChange={ handleLogo }
+                        onChange={ updateLogo }
                         // onChange={event => setLogo(event.target.value)}
                     />
                 </div>
