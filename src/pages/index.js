@@ -151,12 +151,12 @@ export default function Home({ ...prototypesObj }) {
 
                 <button 
                     onClick={ loadPreviousPrototypes }
-                    className='text-red-900 text-2xl fixed bottom-6 left-0'>
+                    className='text-red-900 text-2xl fixed bottom-6 left-6'>
                         Prev
                 </button>
                 <button 
                     onClick={ loadNextPrototypes }
-                    className='text-red-900 text-2xl fixed bottom-6 left-12'>
+                    className='text-red-900 text-2xl fixed bottom-6 left-16 ml-4'>
                         Next
                 </button>
             </div>

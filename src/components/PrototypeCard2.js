@@ -17,18 +17,18 @@ export default function PrototypeCard2({ prototypes }) {
 
   return (
 
-    <div class="u-effect-fade u-effect-hover-zoom relative">
+    <div className="u-effect-fade u-effect-hover-zoom relative">
       {  
         prototypes.map((prototype, idx) => (
-          <Card class="rounded-r-lg lg:h-[160px]" key={ idx }>
-              <div class="overflow-hidden">         
+          <Card className="rounded-r-lg lg:h-[160px]" key={ idx }>
+              <div className="overflow-hidden">         
                   <img
                     src={imgUrl}
                     className="w-full h-full object-cover bg-cover transition-transform duration-500 ease-in-out scale-100 bg-no-repeat bg-center lg:object-cover lg:h-[160px]"
                   />
               </div>
 
-              <div class="proto-card-text">
+              <div className="proto-card-text">
                 { url = "/prototypes/" + prototype.id }
                 <Link href={ url }>
                   <a>
