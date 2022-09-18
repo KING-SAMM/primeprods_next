@@ -83,7 +83,7 @@ const Create = () => {
         // Send form data to api 
         const result = await createPrototype({ setErrors , form })
 
-        console.log("result is: ", )
+        console.log("result is: ", result)
         console.log("form data is: ", ...form)
     }
 

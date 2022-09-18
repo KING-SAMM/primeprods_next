@@ -1,6 +1,7 @@
 import React from 'react'
 import Card from '@/components/Card'
 import { useAuth } from '@/hooks/auth'
+import { imgUrl, imageUrlPath } from '@/constants'
 import Link from 'next/link'
 import Image  from 'next/image'
 // import { useRouter } from 'next/router'
@@ -8,22 +9,27 @@ import Image  from 'next/image'
 export default function PrototypeCard({ prototypesList }) {
     // const router = useRouter()
 
-    // API image path
-    const imageUrlPath = "http://localhost:8000/storage/";
-
     // Image variable - uninitialized
     let url
 
-    // Image variable 
-    const imgUrl = "https://www.notebookcheck.net/fileadmin/_processed_/f/3/csm_csm_Oppo_Watch_3_Render_2_7ef6882bff_4393f5078f.jpg"
+    console.log("ProtoCard prototypes list is: ", prototypesList);
+
+    // useEffect(() => {
+    //   first
+    
+    //   return () => {
+    //     second
+    //   }
+    // }, [prototypesList])
+    
   
   return (
 
-    <div class="u-effect-fade u-effect-hover-zoom relative">
+    <div className="u-effect-fade u-effect-hover-zoom relative">
       {  prototypesList ? 
-        prototypesList.map(prototype => {
+        prototypesList.map((prototype, idx) => {
           return (
-          <Card className="" key={ prototype.id }>
+          <Card className="" key={ idx }>
               <div className="overflow-hidden">         
                   <img
                     src={prototype.image ? imageUrlPath+prototype.image :`${imgUrl}`}

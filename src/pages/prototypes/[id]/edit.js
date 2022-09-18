@@ -1,3 +1,4 @@
+import axios, { axiosMultipartFormData } from '@/lib/axios'
 import { getAllPrototypes } from "@/lib/fetch";
 import GuestNavigationDark from '@/components/Layouts/GuestNavigationDark'
 import { useAuth } from '@/hooks/auth'
@@ -11,6 +12,14 @@ import AuthCard from '@/components/AuthCard'
 export default function Update({ prototype }) {
     // Get the currently authenticated user if any
     const { user } = useAuth({ middleware: 'auth' });
+
+    console.log("From prototype: ", prototype[0].title);
+    console.log("From prototype: ", prototype[0].company);
+    console.log("From prototype: ", prototype[0].location);
+    console.log("From prototype: ", prototype[0].email);
+    console.log("From prototype: ", prototype[0].website);
+    console.log("From prototype: ", prototype[0].tags);
+    console.log("From prototype: ", prototype[0].description);
 
     // Initial input state 
     const [title, setTitle] = useState(prototype[0].title);
@@ -27,6 +36,22 @@ export default function Update({ prototype }) {
     const [imageInput, setImageInput] = useState(null);
     const [logo, setLogo] = useState(logoUrlPath+prototype[0].logo);
     const [logoInput, setLogoInput] = useState(null);
+
+    const csrf = () => axios.get('/sanctum/csrf-cookie')
+    const updatePrototype = async ({ setErrors , form }) => {
+        await csrf()
+
+        setErrors([])
+
+        await axiosMultipartFormData
+            .put(`http://localhost:8000/api/prototypes/${prototype[0].id}/edit`, form)
+            .then(() => mutate())
+            .catch(error => {
+                if (error.response.status !== 422) throw error
+
+                setErrors(Object.values(error.response.data.errors).flat())
+            })
+    }
 
     const updateImage = (e) => {
         // Get the image file 
@@ -65,23 +90,33 @@ export default function Update({ prototype }) {
     };
 
     // Submit form
-    const submitForm =async (event) => {
+    const updateForm = async (event) => {
         event.preventDefault()
 
         // Prepare form fields and files to send to api
         const form = new FormData();
-        form.append('title', title)
-        form.append('image', imageInput)
-        form.append('company', company)
-        form.append('location', location)
-        form.append('email', email)
-        form.append('logo', logoInput)
-        form.append('website', website)
-        form.append('tags', tags)
-        form.append('description', description)
+        form.set('title', title)
+        form.set('image', imageInput)
+        form.set('company', company)
+        form.set('location', location)
+        form.set('email', email)
+        form.set('logo', logoInput)
+        form.set('website', website)
+        form.set('tags', tags)
+        form.set('description', description)
+
+        // Send form data to api 
+        await updatePrototype({ setErrors , form }) 
+     
+        // const result = await updatePrototype({ setErrors , form })
+
+        console.log("form data is: ", ...form)
+        console.log("form individual data is: ", title, imageInput, company, location, email, logoInput, description);
     };
 
-    console.log("Image path is: ", imageUrlPath+prototype[0].image);
+    // console.log("Image path is: ", imageUrlPath+prototype[0].image);
+
+    console.log("form individual data is: ", title, image, company, location, email, logo, description);
 
 
   return (
@@ -98,7 +133,7 @@ export default function Update({ prototype }) {
             <AuthValidationErrors className="mb-4" errors={errors} />
         
             {/* Begin Form  */}
-            <form onSubmit={submitForm} className="p-6 shadow-md">
+            <form onSubmit={ updateForm } className="p-6 shadow-md">
                 {/* @csrf */}
 
                 {/* Title  */}
@@ -107,7 +142,7 @@ export default function Update({ prototype }) {
                     <Input 
                         className="p-2 w-full" 
                         type="text" 
-                        value={ prototype[0].title } 
+                        value={ title } 
                         id="title" 
                         onChange={event => setTitle(event.target.value)}
                         required
@@ -137,7 +172,7 @@ export default function Update({ prototype }) {
                     <Input 
                         className="p-2 w-full" 
                         type="text" 
-                        value={ prototype[0].company } 
+                        value={ company } 
                         id="company" 
                         onChange={event => setCompany(event.target.value)}
                         required
@@ -150,7 +185,7 @@ export default function Update({ prototype }) {
                     <Input 
                         className="p-2 w-full" 
                         type="text" 
-                        value={ prototype[0].location } 
+                        value={ location } 
                         id="location" 
                         placeholder="E.g: Onitsha, Anambra, Nigeria"
                         onChange={event => setLocation(event.target.value)}
@@ -164,7 +199,7 @@ export default function Update({ prototype }) {
                     <Input 
                         className="p-2 w-full" 
                         type="text" 
-                        value={ prototype[0].email } 
+                        value={ email } 
                         id="email" 
                         onChange={event => setEmail(event.target.value)}
                         required
@@ -194,7 +229,7 @@ export default function Update({ prototype }) {
                     <Input 
                         className="p-2 w-full" 
                         type="text" 
-                        value={ prototype[0].website } 
+                        value={ website } 
                         id="website" 
                         placeholder="E.g: https://awesomedomain.com"
                         onChange={event => setWebsite(event.target.value)}
@@ -208,7 +243,7 @@ export default function Update({ prototype }) {
                     <Input 
                         className="p-2 w-full" 
                         type="text" 
-                        value={ prototype[0].tags } 
+                        value={ tags } 
                         id="tags" 
                         placeholder="E.g: AI, anti-gravity"
                         onChange={event => setTags(event.target.value)}
@@ -220,7 +255,7 @@ export default function Update({ prototype }) {
                 <div className="mb-6">
                     <label className="inline-block text-lg mb-2" htmlFor="description">Prototype Description</label>
                     <textarea 
-                        value={ prototype[0].description } 
+                        value={ description } 
                         id="description" 
                         rows="10" 
                         className="text-gray-600 border-2 border-indigo-300 rounded p-2 w-full"

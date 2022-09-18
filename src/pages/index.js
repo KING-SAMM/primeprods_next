@@ -1,6 +1,7 @@
 import Head from 'next/head'
 import Link from 'next/link'
 import Card from '@/components/Card'
+import { imgUrl } from '@/constants';
 import { getAllPrototypes } from "@/lib/fetch";
 import { useAuth } from '@/hooks/auth'
 import { useState, useEffect } from 'react';
@@ -10,7 +11,7 @@ import GuestNavigationDark from '@/components/Layouts/GuestNavigationDark';
 export default function Home({ ...prototypesObj }) {
     const { user } = useAuth()
 
-    const [dark, setDark] = useState(true);
+    const [dark, setDark] = useState("true");
 
     // Destructure properties from prototypes object
     let {
@@ -25,10 +26,6 @@ export default function Home({ ...prototypesObj }) {
         from,
     } = prototypesObj;
 
-    let url;
-
-    // Image variable 
-    const imgUrl = "https://www.notebookcheck.net/fileadmin/_processed_/f/3/csm_csm_Oppo_Watch_3_Render_2_7ef6882bff_4393f5078f.jpg"
 
     // Initial state of prototypes listings
     const [prototypesList, setPrototypesList] = useState(data);
@@ -60,7 +57,6 @@ export default function Home({ ...prototypesObj }) {
         console.log("New page is: ", current_page, data); // 2
 
         setPrototypesList(data);
-        // console.log("New pototypesList is", prototypesList);
 
         setCurrentPage(current_page);
     }
@@ -79,20 +75,16 @@ export default function Home({ ...prototypesObj }) {
 
         currentPage = current_page;
 
-        console.log("Current page match? " + currentPage + " " + current_page)  // 1, 2
+        console.log("Current page match? " + currentPage + " " + current_page)  // 2, 2
 
         console.log("New page is: ", current_page, data); // 2
 
         setPrototypesList(data);
-        // console.log("New pototypesList is", prototypesList);
 
         setCurrentPage(current_page);
     };
     
-
-    useEffect(() => {
-        setCurrentPage(current_page)
-    }, [current_page]);
+    console.log("Global pototypesList is", prototypesList);
         
     return (
         <>
@@ -100,6 +92,7 @@ export default function Home({ ...prototypesObj }) {
                 <title>Prime Protoypes</title>
             </Head>
             <GuestNavigationDark user={ user } dark={ dark } className="bg-transparent backdrop-blur-md fixed top-0 z-10 w-full" />
+ 
             <div className="relative flex items-top justify-center min-h-screen bg-gray-100 dark:bg-gray-900 sm:items-center sm:pt-0">
                 {/* <div className="hidden flex w-full z-10 fixed flex-row top-0 px-6 min-h-12 sm:block backdrop-blur-md float-right py-2"> */}
                     {/* Logo */}

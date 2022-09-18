@@ -12,10 +12,19 @@ export async function getAllPrototypes(id)
         .catch(err => console.error("ERROR is ",err));
 }
 
-// export async function getPageDetails()
-// {
-//     return await fetch('http://localhost:8000')
-// }
+export async function getSinglePage(id)
+{
+    return await fetch(`http://localhost:8000/api/prototypes/${id}`)
+    .then( response => response.json())
+    .then(response => {
+        response = response.prototype
+        // if (id) {
+        //     return response.data.filter(prototype => prototype.id == id)
+        // }
+        return response;
+    })
+    .catch(err => console.error("ERROR is ",err));
+}
 
 export async function getAllUsers(id)
 {
