@@ -55,15 +55,14 @@ export const useAuth = ({ middleware, redirectIfAuthenticated } = {}) => {
 
         setErrors([])
 
-        const response = await axiosMultipartFormData
+        await axiosMultipartFormData
             .post('/api/prototypes/create', form)
             .then(() => mutate())
             .catch(error => {
                 if (error.response.status !== 422) throw error
 
-                setErrors(Object.values(error.response.data.errors).flat())
+                // setErrors(Object.values(error.response.data.errors).flat())
             })
-        return response;
     }
 
 

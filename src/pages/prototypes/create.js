@@ -8,9 +8,7 @@ import AuthCard from '@/components/AuthCard'
 
 const Create = () => {
     // Get the currently authenticated user if any
-    const { user } = useAuth({ middleware: 'auth' })
-    const { createPrototype } = useAuth({ 
-        middleware: 'auth' })
+    const { user, createPrototype } = useAuth({ middleware: 'auth' })
 
     // Initial input state 
     const [title, setTitle] = useState('');
@@ -25,7 +23,7 @@ const Create = () => {
     // State variables for files to be sent to api (backend) server 
     const [image, setImage] = useState(null);
     const [imageInput, setImageInput] = useState(null);
-    const [logo, setLogo] = useState({});
+    const [logo, setLogo] = useState(null);
     const [logoInput, setLogoInput] = useState(null);
 
     const handleImage = (e) => {
@@ -84,7 +82,8 @@ const Create = () => {
         const result = await createPrototype({ setErrors , form })
 
         console.log("result is: ", result)
-        console.log("form data is: ", ...form)
+        console.log("form data is: ", form)
+        console.log("form individual data is: ", ...form)
     }
 
   return (

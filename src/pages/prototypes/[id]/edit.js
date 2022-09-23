@@ -1,5 +1,5 @@
 import axios, { axiosMultipartFormData } from '@/lib/axios'
-import { getAllPrototypes } from "@/lib/fetch";
+import { getAllPrototypes, getSinglePage } from "@/lib/fetch";
 import GuestNavigationDark from '@/components/Layouts/GuestNavigationDark'
 import { useAuth } from '@/hooks/auth'
 import Input from '@/components/Input'
@@ -13,43 +13,37 @@ export default function Update({ prototype }) {
     // Get the currently authenticated user if any
     const { user } = useAuth({ middleware: 'auth' });
 
-    console.log("From prototype: ", prototype[0].title);
-    console.log("From prototype: ", prototype[0].company);
-    console.log("From prototype: ", prototype[0].location);
-    console.log("From prototype: ", prototype[0].email);
-    console.log("From prototype: ", prototype[0].website);
-    console.log("From prototype: ", prototype[0].tags);
-    console.log("From prototype: ", prototype[0].description);
+    console.log("prototype is: ", prototype);
 
     // Initial input state 
-    const [title, setTitle] = useState(prototype[0].title);
-    const [company, setCompany] = useState(prototype[0].company);
-    const [location, setLocation] = useState(prototype[0].location);
-    const [email, setEmail] = useState(prototype[0].email);
-    const [website, setWebsite] = useState(prototype[0].website);
-    const [tags, setTags] = useState(prototype[0].tags);
-    const [description, setDescription] = useState(prototype[0].description);
+    const [title, setTitle] = useState(prototype.title);
+    const [company, setCompany] = useState(prototype.company);
+    const [location, setLocation] = useState(prototype.location);
+    const [email, setEmail] = useState(prototype.email);
+    const [website, setWebsite] = useState(prototype.website);
+    const [tags, setTags] = useState(prototype.tags);
+    const [description, setDescription] = useState(prototype.description);
     const [errors, setErrors] = useState([]);
 
     // State variables for files to be sent to api (backend) server 
-    const [image, setImage] = useState(imageUrlPath+prototype[0].image);
+    const [image, setImage] = useState(imageUrlPath+prototype.image);
     const [imageInput, setImageInput] = useState(null);
-    const [logo, setLogo] = useState(logoUrlPath+prototype[0].logo);
+    const [logo, setLogo] = useState(logoUrlPath+prototype.logo);
     const [logoInput, setLogoInput] = useState(null);
 
     const csrf = () => axios.get('/sanctum/csrf-cookie')
-    const updatePrototype = async ({ setErrors , form }) => {
-        await csrf()
+    const updatePrototype = async ({ setErrors , ...form }) => {
+        await csrf();
 
-        setErrors([])
+        setErrors([]);
 
         await axiosMultipartFormData
-            .put(`http://localhost:8000/api/prototypes/${prototype[0].id}/edit`, form)
-            .then(() => mutate())
+            .put(`http://localhost:8000/api/prototypes/${prototype.id}/edit`, form)
+            // .then(() => mutate())
             .catch(error => {
-                if (error.response.status !== 422) throw error
+                if (error.status !== 422) throw error
 
-                setErrors(Object.values(error.response.data.errors).flat())
+                // setErrors(Object.values(error.response.data.errors).flat())
             })
     }
 
@@ -106,7 +100,7 @@ export default function Update({ prototype }) {
         form.set('description', description)
 
         // Send form data to api 
-        await updatePrototype({ setErrors , form }) 
+        await updatePrototype({ setErrors , ...form }) 
      
         // const result = await updatePrototype({ setErrors , form })
 
@@ -114,7 +108,7 @@ export default function Update({ prototype }) {
         console.log("form individual data is: ", title, imageInput, company, location, email, logoInput, description);
     };
 
-    // console.log("Image path is: ", imageUrlPath+prototype[0].image);
+    // console.log("Image path is: ", imageUrlPath+prototype.image);
 
     console.log("form individual data is: ", title, image, company, location, email, logo, description);
 
@@ -126,7 +120,7 @@ export default function Update({ prototype }) {
 
         <div className="flex flex-col w-[96%] md:w-3/5 lg:w-2/5 mx-auto my-8 rounded-xl bg-white">
             <header className="my-4">
-                <h2 className='px-2'>Edit { prototype[0].title }</h2>
+                <h2 className='px-2'>Edit { prototype.title }</h2>
             </header>
             
             {/* Validation Errors */}
@@ -268,7 +262,7 @@ export default function Update({ prototype }) {
                 </div>
 
                 <div className="mb-6">
-                    <button className="bg-[#3E4E8D] rounded py-2 px-4 text-white hover:bg-[#1A2A39]">Create Prototype</button>
+                    <button className="bg-[#3E4E8D] rounded py-2 px-4 text-white hover:bg-[#1A2A39]">Edit Prototype</button>
                 </div>
             </form>
             
@@ -280,7 +274,8 @@ export default function Update({ prototype }) {
 
 export async function getStaticProps({ params }) {
     const { id } = params;
-    const prototype = await getAllPrototypes(id);
+    // const prototype = await getAllPrototypes(id);
+    const prototype = await getSinglePage(id);
 
     return {
         props: { prototype }
