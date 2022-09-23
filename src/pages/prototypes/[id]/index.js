@@ -13,56 +13,26 @@ export default function Prototype() {
     const { user } = useAuth({ middleware: 'guest' });
     const [pathname, setPathname] = useState('');
     const [id, setId] = useState('');
-    const [prototype, setPrototype] = useState({})
+    const [prototype, setPrototype] = useState(null);
 
+    const getDetails = async () => {
+        const path = window.location.pathname;
+        console.log("The current url path is: ", path);
+        setPathname(path);
+        setId(path.slice(12));
     
+        const resp = await getSinglePage(id);
+
+        return setPrototype(resp);
+    }
+
     useEffect(() => {
-        let isCancelled = false;
-
-        const getDetails = async() => {
-            setPathname(window.location.pathname);
-            console.log("Window path is: ", window.location.pathname);
-            const path = window.location.pathname;
-            console.log("The current url path is: ", path);
-            setPathname(path);
-            setId(pathname.slice(12));
-            setId(path.slice(12));
-            console.log("The current pathname is: ", path);
-            console.log("Id is: ", id);
-    
-            const resp = await getSinglePage(id);
-
-            if (!isCancelled) {
-                setPrototype(resp);
-                console.log("PROTOTYPE is: ", prototype);
-                
-                console.log("The prototype is: ", prototype);
-            }
-        }
-    
-        getDetails();
-    
-      return () => {
-        isCancelled = true
-      }
-    
-    }, [id, prototype])
-    
-
-    // setTimeout(() => {
-    //     // console.log("The prototype is: ", prototype);
-    // }, 3000);
-    console.log("Global prototype is: ", prototype);
-    // console.log("Prototypes is: ", prototypes);
-    console.log("The prototype is: ", prototype);
-    console.log("The prototype id is: ", prototype.id);
-    console.log("The prototype title is: ", prototype.title);
-    console.log("The prototype location is: ", prototype.location);
-    console.log("The prototype email is: ", prototype.email);
+        getDetails();    
+    }, [id])
     
     return (
         <GuestLayout>
-        {  prototype ? (
+        {  prototype && (
                 <>
                    <Head>
                        <title>{ prototype.title } - Prime Prototypes</title>
@@ -110,68 +80,18 @@ export default function Prototype() {
                    </div>
                </>
             )
-            : <>
-                <Head>
-                    <title>Loading...</title>
-                </Head>
-                <GuestNavigation user={ user } />
-                <div className="relative px-4 md:px-4 lg:px-8">
-                    <h1 className="text-center">
-                        Loading...
-                    </h1>
-                </div>
-            </>
+            // : <>
+            //     <Head>
+            //         <title>Loading...</title>
+            //     </Head>
+            //     <GuestNavigation user={ user } />
+            //     <div className="relative px-4 md:px-4 lg:px-8">
+            //         <h1 className="text-center">
+            //             Loading...
+            //         </h1>
+            //     </div>
+            // </>
         }
         </GuestLayout>
     )
 }
-
-// export async function getStaticProps({ params }) {
-//     const { id } = params;
-//     const prototype = await getSinglePage(id);
-
-//     return {
-//         props: { prototype }
-//     }
-// }
-
-// export async function getStaticPaths() {
-//     const pathname = "/prototypes/52";
-//     console.log("The current url path is: ", pathname);
-//     const id = pathname.slice(12);
-//     console.log("Id is: ", id);
-
-//     const paths = (id) => {params: { id: id.toString() }};
-
-//     return {
-//         paths,
-//         fallback: "blocking" 
-//     }
-
-// }
-
-// export async function getStaticProps({ params }) {
-//     const { id } = params;
-//     const prototypes = await getSinglePage(id);
-
-//     return {
-//         props: { prototypes }
-//     }
-// }
-
-// export async function getStaticPaths() {
-//     const prototypesObj = await getAllPrototypes();  
-    
-//     const { data } = prototypesObj;
-
-//     const prototypes = data;
-
-//     const paths = prototypes.map(prototype => ({
-//         params: { id: prototype.id.toString() }
-//     }));
-
-//     return {
-//         paths,
-//         fallback: "blocking" 
-//     }
-// }

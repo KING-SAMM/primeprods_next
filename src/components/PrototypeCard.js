@@ -6,30 +6,29 @@ import Link from 'next/link'
 import Image  from 'next/image'
 // import { useRouter } from 'next/router'
 
-export default function PrototypeCard({ prototypesList }) {
+export default function PrototypeCard({ prototypesList, isLoading }) {
     // const router = useRouter()
 
     // Image variable - uninitialized
     let url
 
-    console.log("ProtoCard prototypes list is: ", prototypesList);
-
-    // useEffect(() => {
-    //   first
-    
-    //   return () => {
-    //     second
-    //   }
-    // }, [prototypesList])
-    
+    console.log("ProtoCard prototypes list is: ", prototypesList);  
   
   return (
 
     <div className="u-effect-fade u-effect-hover-zoom relative">
+      {/* Loading Message  */}
+      { isLoading && (
+          <div className="text-5xl text-blue-400">
+              Loading...
+          </div>
+        )}
+
+      {/* Prototypes list  */}
       {  prototypesList ? 
-        prototypesList.map((prototype, idx) => {
+        prototypesList.map((prototype) => {
           return (
-          <Card className="" key={ idx }>
+          <Card className="" key={ prototype.id }>
               <div className="overflow-hidden">         
                   <img
                     src={prototype.image ? imageUrlPath+prototype.image :`${imgUrl}`}
@@ -49,12 +48,11 @@ export default function PrototypeCard({ prototypesList }) {
                 </Link>    
               </div>
           </Card>
-        )})
-
+        )})   
         :
-            <div className="text-5xl text-blue-400">
-              No prototype found...
-            </div>
+        <div className="text-5xl text-blue-400">
+            No prototype found...
+        </div>
       }
     </div>
   )

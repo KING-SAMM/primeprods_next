@@ -12,6 +12,7 @@ export default function Home({ ...prototypesObj }) {
     const { user } = useAuth()
 
     const [dark, setDark] = useState("true");
+    const [isLoading, setIsLoading] = useState(true)
 
     // Destructure properties from prototypes object
     let {
@@ -83,6 +84,12 @@ export default function Home({ ...prototypesObj }) {
 
         setCurrentPage(current_page);
     };
+
+    useEffect(() => {
+      setPrototypesList(data);
+      setIsLoading(false);
+    }, [isLoading])
+    
     
     console.log("Global pototypesList is", prototypesList);
         
@@ -94,52 +101,12 @@ export default function Home({ ...prototypesObj }) {
             <GuestNavigationDark user={ user } dark={ dark } className="bg-transparent backdrop-blur-md fixed top-0 z-10 w-full" />
  
             <div className="relative flex items-top justify-center min-h-screen bg-gray-100 dark:bg-gray-900 sm:items-center sm:pt-0">
-                {/* <div className="hidden flex w-full z-10 fixed flex-row top-0 px-6 min-h-12 sm:block backdrop-blur-md float-right py-2"> */}
-                    {/* Logo */}
-                    {/* <div className="flex-shrink-0">
-                        <Link href="/">
-                            <a> \\
-                                <img
-                                    src='/images/logo4.PNG'
-                                    className='block h-12 w-auto fill-current'
-                                    />
-                            </a>
-                        </Link>
-                    </div> */}
-                    {/* Mav Links  */}
-                    {/* <div className='absolute right-6 bottom-6'>
-                        <Link href="/">
-                                <a className="mx-4 text-sm text-gray-300 no-underline">
-                                    Prototypes
-                                </a>
-                        </Link>
-
-                        {user ?
-                            <Link href="/admin/dashboard">
-                                <a className="ml-4 text-sm text-gray-300 no-underline">
-                                    Dashboard
-                                </a>
-                            </Link>
-                            :
-                            <>
-                                <Link href="/login">
-                                    <a className="text-sm text-gray-300 no-underline">Login</a>
-                                </Link>
-
-                                <Link href="/register">
-                                    <a className="ml-4 text-sm text-gray-300 no-underline">
-                                        Register
-                                    </a>
-                                </Link>
-                            </>
-                        }
-                    </div> */}
-                {/* </div> */}
                 <div className="mt-24 max-w-6xl mx-auto sm:px-6 lg:px-8">
 
+
                     {/* Prototype card  */}
-                    <PrototypeCard 
-                        prototypesList={ prototypesList } />
+                    { prototypesList && ( <PrototypeCard 
+                        prototypesList={ prototypesList } isLoading={ isLoading } /> )}
                 </div>
 
                 <button 
