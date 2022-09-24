@@ -11,11 +11,12 @@ import AuthCard from '@/components/AuthCard'
 
 export default function Update({ prototype }) {
     // Get the currently authenticated user if any
-    const { user } = useAuth({ middleware: 'auth' });
+    const { user, updatePrototype } = useAuth({ middleware: 'auth' });
 
     console.log("prototype is: ", prototype);
 
-    // Initial input state 
+    // Initial input state
+    const [id, setId] = useState(prototype.id);
     const [title, setTitle] = useState(prototype.title);
     const [company, setCompany] = useState(prototype.company);
     const [location, setLocation] = useState(prototype.location);
@@ -31,21 +32,21 @@ export default function Update({ prototype }) {
     const [logo, setLogo] = useState(logoUrlPath+prototype.logo);
     const [logoInput, setLogoInput] = useState(null);
 
-    const csrf = () => axios.get('/sanctum/csrf-cookie')
-    const updatePrototype = async ({ setErrors , ...form }) => {
-        await csrf();
+    // const csrf = () => axios.get('/sanctum/csrf-cookie')
+    // const updatePrototype = async ({ setErrors , form }) => {
+    //     await csrf();
 
-        setErrors([]);
+    //     setErrors([]);
 
-        await axiosMultipartFormData
-            .put(`http://localhost:8000/api/prototypes/${prototype.id}/edit`, form)
-            // .then(() => mutate())
-            .catch(error => {
-                if (error.status !== 422) throw error
+    //     await axiosMultipartFormData
+    //         .put(`http://localhost:8000/api/prototypes/${prototype.id}/edit`, form)
+    //         // .then(() => mutate())
+    //         .catch(error => {
+    //             if (error.status !== 422) throw error
 
-                // setErrors(Object.values(error.response.data.errors).flat())
-            })
-    }
+    //             // setErrors(Object.values(error.response.data.errors).flat())
+    //         })
+    // }
 
     const updateImage = (e) => {
         // Get the image file 
@@ -89,18 +90,20 @@ export default function Update({ prototype }) {
 
         // Prepare form fields and files to send to api
         const form = new FormData();
-        form.set('title', title)
-        form.set('image', imageInput)
-        form.set('company', company)
-        form.set('location', location)
-        form.set('email', email)
-        form.set('logo', logoInput)
-        form.set('website', website)
-        form.set('tags', tags)
-        form.set('description', description)
+        form.append('title', title)
+        form.append('image', imageInput)
+        form.append('company', company)
+        form.append('location', location)
+        form.append('email', email)
+        form.append('logo', logoInput)
+        form.append('website', website)
+        form.append('tags', tags)
+        form.append('description', description)
+
+        // console.log(id)
 
         // Send form data to api 
-        await updatePrototype({ setErrors , ...form }) 
+        await updatePrototype({ id, setErrors , form }) 
      
         // const result = await updatePrototype({ setErrors , form })
 

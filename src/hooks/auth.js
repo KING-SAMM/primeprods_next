@@ -50,16 +50,41 @@ export const useAuth = ({ middleware, redirectIfAuthenticated } = {}) => {
             })
     }
 
-    const createPrototype = async ({ setErrors , form }) => {
+    const createPrototype = async ({ setSuccess, setErrors, form }) => {
         await csrf()
 
+        setSuccess('')
         setErrors([])
 
-        await axiosMultipartFormData
+        axiosMultipartFormData
             .post('/api/prototypes/create', form)
+            .then(response => {
+                if (response.status === 201) {
+                    setSuccess(response.data.success)
+                }
+            })
             .then(() => mutate())
             .catch(error => {
+                console.log("ERROR is: ", error)
                 if (error.response.status !== 422) throw error
+
+                setErrors(Object.values(error.response.data.errors).flat())
+            })
+    }
+
+
+    // Update 
+    const updatePrototype = async ({ id, setErrors, form }) => {
+        await csrf();
+
+        setErrors([]);
+
+        await axiosMultipartFormData
+            .post(`/api/prototypes/${id}/edit?_method=PUT`, form)
+            .then(() => mutate())
+            .catch(error => {
+                console.log("ERROR is: ", error)
+                // if (error.status !== 422) throw error
 
                 // setErrors(Object.values(error.response.data.errors).flat())
             })
@@ -125,6 +150,7 @@ export const useAuth = ({ middleware, redirectIfAuthenticated } = {}) => {
         register,
         login,
         createPrototype,
+        updatePrototype,
         forgotPassword,
         resetPassword,
         resendEmailVerification,

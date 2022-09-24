@@ -18,6 +18,7 @@ const Create = () => {
     const [website, setWebsite] = useState('');
     const [tags, setTags] = useState('');
     const [description, setDescription] = useState('');
+    const [success, setSuccess] = useState('');
     const [errors, setErrors] = useState([]);
 
     // State variables for files to be sent to api (backend) server 
@@ -79,11 +80,12 @@ const Create = () => {
         form.append('description', description)
 
         // Send form data to api 
-        const result = await createPrototype({ setErrors , form })
-
-        console.log("result is: ", result)
-        console.log("form data is: ", form)
-        console.log("form individual data is: ", ...form)
+        await createPrototype({ setSuccess, setErrors , form })
+    
+        // console.log("success is: ", success)
+        // console.log("form data is: ", form)
+        // console.log("form individual data is: ", ...form)
+    
     }
 
   return (
@@ -98,6 +100,9 @@ const Create = () => {
             
             {/* Validation Errors */}
             <AuthValidationErrors className="mb-4" errors={errors} />
+
+            {/* Success Message  */}
+            <din className="text-teal-500">{ success }</din>
         
             {/* Begin Form  */}
             <form onSubmit={submitForm} className="p-6 shadow-md">
@@ -236,6 +241,10 @@ const Create = () => {
 
                 <div className="mb-6">
                     <button className="bg-[#3E4E8D] rounded py-2 px-4 text-white hover:bg-[#1A2A39]">Create Prototype</button>
+                    { success && <img 
+                        src="/images/success-check.png" 
+                        className='block mx-auto h-6 mt-2'
+                        alt="Success" /> }
                 </div>
             </form>
             

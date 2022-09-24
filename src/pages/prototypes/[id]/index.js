@@ -40,7 +40,7 @@ export default function Prototype() {
                    <GuestNavigation user={ user } />
                    <div className="relative px-4 md:px-4 lg:px-8">
                        <div key={ prototype.id }>
-                           <h1 className="text-center text-6xl mt-4 lg:mt-6">{ prototype.title }</h1>
+                           <h1 className="font-thin text-center text-6xl mt-4 lg:mt-6">{ prototype.title }</h1>
                            <p className="text-center font-semibold">{ prototype.tags }</p>
                            {/* <x-prototype-tags :tagsCsv="$prototype->tags" /> */}
 
