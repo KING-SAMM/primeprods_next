@@ -7,12 +7,17 @@ import { useAuth } from '@/hooks/auth'
 import { useState, useEffect } from 'react';
 import PrototypeCard from '@/components/PrototypeCard'
 import GuestNavigationDark from '@/components/Layouts/GuestNavigationDark';
+import { useFetch } from '@/hooks/useFetch';
+import { useRouter } from 'next/router';
 
 export default function Home({ ...prototypesObj }) {
     const { user } = useAuth()
+    const router = useRouter();
+    // const { getPage } = useFetch();
 
     const [dark, setDark] = useState("true");
-    const [isLoading, setIsLoading] = useState(true)
+    const [isLoading, setIsLoading] = useState(true);
+    const [errors, setErrors] = useState(null)
 
     // Destructure properties from prototypes object
     let {
@@ -67,10 +72,18 @@ export default function Home({ ...prototypesObj }) {
         current_page = currentPage;
         
         (current_page >= last_page) ? setCurrentPage(last_page): (current_page = current_page + 1);
+        console.log("ANNOYING current page is: ", current_page);
+        nextPrototypesObj = await useFetch(`http://localhost:8000/api/hg?page=${ current_page }`, setErrors, current_page );
+
+        console.log("GOT BACK errors" + errors + ", and response: " + nextPrototypesObj)
+
+        console.log("Type of RESP: ", typeof(nextPrototypesObj))
+
+        if (! nextPrototypesObj) return router.push('/404');        
         
-        nextPrototypesObj =  await fetch(`http://localhost:8000/api?page=${ current_page }`);
-        nextPrototypesObj = await nextPrototypesObj.json();
-        nextPrototypesObj = nextPrototypesObj.prototypes;
+        // nextPrototypesObj =  await fetch(`http://localhost:8000/api?page=${ current_page }`);
+        // nextPrototypesObj = await nextPrototypesObj.json();
+        // nextPrototypesObj = nextPrototypesObj.prototypes;
 
         ({ current_page, data } = nextPrototypesObj );
 
@@ -103,10 +116,9 @@ export default function Home({ ...prototypesObj }) {
             <div className="relative flex items-top justify-center min-h-screen bg-gray-100 dark:bg-gray-900 sm:items-center sm:pt-0">
                 <div className="mt-24 max-w-6xl mx-auto sm:px-6 lg:px-8">
 
-
                     {/* Prototype card  */}
-                    { prototypesList && ( <PrototypeCard 
-                        prototypesList={ prototypesList } isLoading={ isLoading } /> )}
+                      <PrototypeCard 
+                        prototypesList={ prototypesList } isLoading={ isLoading } /> 
                 </div>
 
                 <button 

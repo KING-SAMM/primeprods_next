@@ -1,42 +1,38 @@
-export async function getAllPrototypes(id)
+export function getAllPrototypes(id)
 {
-    return await fetch('http://localhost:8000/api')
+    return fetch('http://localhost:8000/api')
         .then( response => response.json())
         .then(response => {
+            if(response.status === 500) {
+                throw Error("Encountered possible network error.")
+            }
             response = response.prototypes
             if (id) {
                 return response.data.filter(prototype => prototype.id == id)
             }
             return response;
         })
-        .catch(err => console.error("ERROR is ",err));
+        .catch(error => error.response)
 }
 
-export async function getSinglePage(id)
+export function getSinglePrototype(id)
 {
-    return await fetch(`http://localhost:8000/api/prototypes/${id}`)
+    return fetch(`http://localhost:8000/api/prototypes/${id}`)
     .then( response => response.json())
     .then(response => {
-        response = response.prototype
-        // if (id) {
-        //     return response.data.filter(prototype => prototype.id == id)
-        // }
-        return response;
+        return response = response.prototype
     })
-    .catch(err => console.error("ERROR is ",err));
 }
 
-export async function getAllUsers(id)
+export function getAllUsers(id)
 {
-    return await fetch('http://localhost:8000/api/users')
+    return fetch('http://localhost:8000/api/users')
         .then( response => response.json())
         .then(response => {
             response = response.users
-            console.log('RESPONSE is ', response);
             if (id) {
                 return response.filter(user => user.id == id)
             }
             return response;
         })
-        .catch(err => console.error("ERROR is ",err));
 }

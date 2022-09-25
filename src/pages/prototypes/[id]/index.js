@@ -1,4 +1,4 @@
-import { getAllPrototypes, getSinglePage } from "@/lib/fetch";
+import { getAllPrototypes, getSinglePrototype } from "@/lib/fetch";
 import GuestLayout from "@/components/Layouts/GuestLayout";
 import GuestNavigation from "@/components/Layouts/GuestNavigation";
 import { imageUrlPath, logoUrlPath, imgUrl, logo } from "@/constants";
@@ -21,7 +21,7 @@ export default function Prototype() {
         setPathname(path);
         setId(path.slice(12));
     
-        const resp = await getSinglePage(id);
+        const resp = await getSinglePrototype(id);
 
         return setPrototype(resp);
     }

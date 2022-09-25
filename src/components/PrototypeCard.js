@@ -4,6 +4,7 @@ import { useAuth } from '@/hooks/auth'
 import { imgUrl, imageUrlPath } from '@/constants'
 import Link from 'next/link'
 import Image  from 'next/image'
+import NotFoundResource from './NotFoundResource'
 // import { useRouter } from 'next/router'
 
 export default function PrototypeCard({ prototypesList, isLoading }) {
@@ -13,10 +14,17 @@ export default function PrototypeCard({ prototypesList, isLoading }) {
     let url
 
     console.log("ProtoCard prototypes list is: ", prototypesList);  
+    
+    if (!prototypesList)
+    {
+        console.log("prototypesList is undefined")
+    } else {
+        console.log("prototypesList is defined")
+    }
   
   return (
 
-    <div className="u-effect-fade u-effect-hover-zoom relative">
+    <div className="">
       {/* Loading Message  */}
       { isLoading && (
           <div className="text-5xl text-blue-400">
@@ -50,9 +58,7 @@ export default function PrototypeCard({ prototypesList, isLoading }) {
           </Card>
         )})   
         :
-        <div className="text-5xl text-blue-400">
-            No prototype found...
-        </div>
+        <NotFoundResource title={ 'No prototypes found...' } />
       }
     </div>
   )
