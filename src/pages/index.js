@@ -2,6 +2,7 @@ import Head from 'next/head'
 import Link from 'next/link'
 import Card from '@/components/Card'
 import { imgUrl } from '@/constants';
+import HeroLayout from '@/components/Layouts/HeroLayout';
 import { getAllPrototypes } from "@/lib/fetch";
 import { useAuth } from '@/hooks/auth'
 import { useState, useEffect } from 'react';
@@ -49,52 +50,35 @@ export default function Home({ ...prototypesObj }) {
         (current_page <= first_page) ? setCurrentPage(first_page) : (current_page = current_page - 1);
         
         // Fetch prototypesObject from this current page
-        prevPrototypesObj =  await fetch(`http://localhost:8000/api?page=${ current_page }`);
-        prevPrototypesObj = await prevPrototypesObj.json();
-        prevPrototypesObj = prevPrototypesObj.prototypes;
+        prevPrototypesObj = await useFetch(`http://localhost:8000/api?page=${ current_page }`, setErrors, current_page );
+
+        // Redirect if prototypes object is not received
+        if (! prevPrototypesObj) return router.push('/404');   
 
         // Destructure properties e.g new current_page and new data from new prototypesObj (i.e prevPrototypesObj)
         ({ current_page, data } = prevPrototypesObj );
 
+        // Set currentPage value to be same as current_page
         currentPage = current_page;
 
-        console.log("Current page match? " + currentPage + " " + current_page)  // same
-
-        console.log("New page is: ", current_page, data); // 2
-
+        // Update prototypes list to reflect new data from new current page
+        // Update currentPage with current_page
         setPrototypesList(data);
-
         setCurrentPage(current_page);
     }
 
     // Next Page
     const loadNextPrototypes = async (nextPrototypesObj) => {
         current_page = currentPage;
-        
         (current_page >= last_page) ? setCurrentPage(last_page): (current_page = current_page + 1);
-        console.log("ANNOYING current page is: ", current_page);
-        nextPrototypesObj = await useFetch(`http://localhost:8000/api/hg?page=${ current_page }`, setErrors, current_page );
-
-        console.log("GOT BACK errors" + errors + ", and response: " + nextPrototypesObj)
-
-        console.log("Type of RESP: ", typeof(nextPrototypesObj))
+    
+        nextPrototypesObj = await useFetch(`http://localhost:8000/api?page=${ current_page }`, setErrors, current_page );
 
         if (! nextPrototypesObj) return router.push('/404');        
-        
-        // nextPrototypesObj =  await fetch(`http://localhost:8000/api?page=${ current_page }`);
-        // nextPrototypesObj = await nextPrototypesObj.json();
-        // nextPrototypesObj = nextPrototypesObj.prototypes;
-
         ({ current_page, data } = nextPrototypesObj );
 
         currentPage = current_page;
-
-        console.log("Current page match? " + currentPage + " " + current_page)  // 2, 2
-
-        console.log("New page is: ", current_page, data); // 2
-
         setPrototypesList(data);
-
         setCurrentPage(current_page);
     };
 
@@ -112,6 +96,8 @@ export default function Home({ ...prototypesObj }) {
                 <title>Prime Protoypes</title>
             </Head>
             <GuestNavigationDark user={ user } dark={ dark } className="bg-transparent backdrop-blur-md fixed top-0 z-10 w-full" />
+
+            <HeroLayout />
  
             <div className="relative flex items-top justify-center min-h-screen bg-gray-100 dark:bg-gray-900 sm:items-center sm:pt-0">
                 <div className="mt-24 max-w-6xl mx-auto sm:px-6 lg:px-8">

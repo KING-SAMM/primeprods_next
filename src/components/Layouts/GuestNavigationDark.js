@@ -3,7 +3,7 @@ import Dropdown from '@/components/Dropdown'
 import DropdownLink, { DropdownMultiItems } from '@/components/DropdownLink'
 import Link from 'next/link'
 import Image from 'next/image'
-import { NavLinkDark } from '@/components/NavLink'
+import NavLink from '@/components/NavLink'
 import ResponsiveNavLink, { ResponsiveNavButton } from '@/components/ResponsiveNavLink'
 import { DropdownButton } from '@/components/DropdownLink'
 import { useAuth } from '@/hooks/auth'
@@ -37,30 +37,30 @@ const GuestNavigationDark = ({ user, ...props }) => {
 
                         {/* Navigation Links */}
                         <div className="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex top-5">
-                            <NavLinkDark 
+                            <NavLink 
                                 href="/"
                                 active={router.pathname === '/'}>
                                 Prototypes
-                            </NavLinkDark>
+                            </NavLink>
                             {user ?
-                                <NavLinkDark 
+                                <NavLink 
                                     href="/admin/dashboard"
                                     active={router.pathname === '/admin/dashboard'}>
                                         Dashboard
-                                </NavLinkDark>
+                                </NavLink>
                                 :
                                 <>
-                                    <NavLinkDark 
+                                    <NavLink 
                                         href="/login"
                                         active={router.pathname === '/login'}>
                                             Login
-                                    </NavLinkDark>
+                                    </NavLink>
 
-                                    <NavLinkDark 
+                                    <NavLink 
                                         href="/register"
                                         active={router.pathname === '/register'}>
                                             Register
-                                    </NavLinkDark>
+                                    </NavLink>
                                 </>
                             }
                         </div>
