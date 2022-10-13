@@ -116,7 +116,7 @@ export default function Example() {
                 <span className="block text-indigo-600 xl:inline">prime prototypes</span>
               </h1>
               <p className="mt-3 text-base text-gray-500 sm:mx-auto sm:mt-5 sm:max-w-xl sm:text-lg md:mt-5 md:text-xl lg:mx-0">
-                .
+                Display your creativity and innovation. List your brand's amazing products and wow investors.
               </p>
               <div className="mt-5 sm:mt-8 sm:flex sm:justify-center lg:justify-start">
                 <div className="rounded-md shadow">
